@@ -1,0 +1,66 @@
+/* General Card Styles */
+.policy-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+}
+
+.policy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Title Styles */
+.policy-title {
+    font-size: 1.5rem;
+    color: #1e293b; /* Dark gray */
+    margin-bottom: 0.75rem;
+}
+
+/* Details */
+.policy-type,
+.policy-premium,
+.policy-status {
+    font-size: 1rem;
+    color: #6b7280; /* Neutral gray */
+    margin-bottom: 0.5rem;
+}
+
+/* Status Colors */
+.policy-status {
+    font-weight: bold;
+}
+
+.policy-status.active {
+    color: #10b981; /* Green for active policies */
+}
+
+.policy-status.expired {
+    color: #ef4444; /* Red for expired policies */
+}
+
+.policy-status.pending {
+    color: #f59e0b; /* Amber for pending policies */
+}
+
+/* Button Styles */
+.policy-btn {
+    background-color: #1d4ed8; /* Primary blue */
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.policy-btn:hover {
+    background-color: #2563eb; /* Darker blue on hover */
+}
