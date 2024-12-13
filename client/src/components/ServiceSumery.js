@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; // Import framer-motion for animations
 import { FaFileInvoice, FaAmbulance, FaStethoscope } from 'react-icons/fa'; // Importing relevant icons
+import backgroundImage from '../assets/back12.jpg'
+
 
 const ServiceSummary = () => {
   const featuredServices = [
@@ -29,8 +31,18 @@ const ServiceSummary = () => {
   ];
 
   return (
-    <div className="p-8 bg-gray-100 rounded-lg shadow-md">
-      <h2 className="text-3xl font-bold mb-6">Service Summary</h2>
+    <div className="p-8 bg-gray-100 rounded-lg shadow-md "
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "70vh",
+      width: "100%",
+    }}>
+    <h2 className="text-4xl font-extrabold mb-6 text-center text-white">Our Services</h2>
+<hr className="w-64 h-1 mx-auto bg-red-500 border-0 rounded-full mt-4 mb-8" />
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {featuredServices.map((service) => (
           <motion.div

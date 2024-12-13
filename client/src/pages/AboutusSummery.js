@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import backgroundImage from '../assets/backXYZ.jpg'
 
 const AboutUsSummary = () => {
   return (
-    <div className="bg-gradient-to-tl from-cyan-900 to-gray-400 py-12 px-6">
+    <div className="bg-gradient-to-tl from-cyan-900 to-gray-400 py-12 px-6"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "90vh",
+      width: "100%",
+    }}>
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-gray-200 mb-6">About Us</h2>
         <p className="text-lg text-gray-200 mb-6">
@@ -32,7 +40,7 @@ const AboutUsSummary = () => {
         <div className="mt-6">
         <Link
     to="/about"
-    className="no-underline px-8 py-3 bg-blue-400 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-white hover:text-blue-400 transition-all duration-300"
+    className="no-underline px-8 py-3 bg-blue-400 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-pink-700 hover:text-blue-400 transition-all duration-300"
   >
     Learn More
   </Link>

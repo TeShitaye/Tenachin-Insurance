@@ -85,7 +85,7 @@ const Policies = () => {
         {policies.map((policy) => (
           <article
             key={policy.id}
-            className="bg-transparent rounded-lg shadow-md p-8 border-l-4 border border-blue-600"
+            className="bg-gray-600 w-5/6 rounded-lg shadow-md p-8 border-l-4 border border-blue-600 mx-12"
           >
             <header>
               <h2 className="text-2xl font-bold text-white">

@@ -59,7 +59,7 @@ const Sidebar = () => {
                 }
               >
                 <FaTachometerAlt size={20} />
-                <span className={`${isOpen ? "block" : "hidden"} text-sm`}>
+                <span className={`${isOpen ? "block" : "hidden"} text-sm font-semibold`}>
                   Dashboard
                 </span>
               </NavLink>
@@ -74,7 +74,7 @@ const Sidebar = () => {
                 }
               >
                 <FaUsers size={20} />
-                <span className={`${isOpen ? "block" : "hidden"} text-sm`}>
+                <span className={`${isOpen ? "block" : "hidden"} text-sm font-semibold`}>
                   Users
                 </span>
               </NavLink>
@@ -89,7 +89,7 @@ const Sidebar = () => {
                 }
               >
                 <FaFileAlt size={20} />
-                <span className={`${isOpen ? "block" : "hidden"} text-sm`}>
+                <span className={`${isOpen ? "block" : "hidden"} text-sm font-semibold`}>
                   Claims
                 </span>
               </NavLink>
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 }
               >
                 <FaChartBar size={20} />
-                <span className={`${isOpen ? "block" : "hidden"} text-sm`}>
+                <span className={`${isOpen ? "block" : "hidden"} text-sm font-semibold`}>
                   Reports
                 </span>
               </NavLink>
@@ -119,7 +119,7 @@ const Sidebar = () => {
                 }
               >
                 <FaCogs size={20} />
-                <span className={`${isOpen ? "block" : "hidden"} text-sm`}>
+                <span className={`${isOpen ? "block" : "hidden"} text-sm font-semibold`}>
                   Settings
                 </span>
               </NavLink>

@@ -1,6 +1,6 @@
 import React from "react";
-import claim_header from "../assets/claim_header.png";
-
+import claim_header from "../assets/back12.jpg";
+import backgroundImage from '../assets/admin.jpg'
 const claimsData = [
   {
     id: 1,
@@ -53,8 +53,17 @@ const ClaimsReport = () => {
   const stats = calculateStats(claimsData);
 
   return (
-    <div className="bg-gradient-to-r from-gray-800 to-gray-400 bg-cover bg-center min-h-screen pt-0 pb-24">
-      <img src={claim_header} alt="Claim Header" className="w-full brightness-75" />
+    <div className="transparent bg-gradient-to-r from-gray-800 to-gray-400 bg-cover bg-center min-h-screen pt-0 pb-24"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "280vh",
+      width: "100%",
+    
+    }}>
+      <img src={claim_header} alt="Claim Header" className="w-full brightness-60 h-64" />
 
       <h1 className="text-4xl font-extrabold text-white mb-6 text-center pt-12">
         Claims Report
@@ -85,36 +94,51 @@ const ClaimsReport = () => {
         {/* Denied Claims */}
         <div className="bg-red-50 shadow-md rounded-lg p-6 text-center">
           <h2 className="text-3xl font-bold text-red-700">{stats.denied}</h2>
-          <p className="text-lg text-gray-600">Denied Claims</p>
+          <p className="text-lg text-blue-600">Denied Claims</p>
         </div>
       </div>
 
-      <div className="mt-10 px-8">
-        <h2 className="text-2xl font-bold text-white mb-4">Claims Breakdown</h2>
-        <div className="space-y-6">
-          {claimsData.map((claim) => (
-            <div
-              key={claim.id}
-              className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600"
-            >
-              <h3 className="text-xl font-bold text-blue-700">{claim.service}</h3>
-              <p className="text-gray-700 mt-2">Policy: {claim.policyTitle}</p>
-              <p className="text-lg font-medium text-gray-800">
-                Claim Status:{" "}
-                <span
-                  className={`${
-                    claim.claimStatus === "Approved"
-                      ? "text-green-600"
-                      : claim.claimStatus === "Pending"
-                      ? "text-yellow-600"
-                      : "text-red-600"
-                  }`}
-                >
-                  {claim.claimStatus}
-                </span>
-              </p>
-            </div>
-          ))}
+      {/* Additional Information Section */}
+      <div className="mt-16 px-8 space-y-12">
+        <div className="transparent p-6 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-extrabold text-white mb-4">Advantages to Claim</h2>
+          <p className="text-lg text-white leading-relaxed">
+            Making claims on your insurance policy comes with several benefits. By doing so, you
+            ensure financial stability in times of unexpected medical or other emergencies.
+            Our streamlined claims processing provides hassle-free experiences for policyholders.
+          </p>
+          <p className="text-lg text-white leading-relaxed">
+            Additionally, you gain peace of mind knowing that you are covered for significant
+            expenses, letting you focus on your recovery or essential tasks instead of worrying
+            about finances.
+          </p>
+        </div>
+
+        <div className="bg-transparent p-6 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-extrabold text-white mb-4">Procedures to Claim</h2>
+          <p className="text-lg text-white leading-relaxed mb-4">
+            Filing a claim is a straightforward process designed to minimize stress. Here are the
+            steps you need to follow:
+          </p>
+          <ol className="list-decimal list-inside text-white text-lg space-y-2">
+            <li>Gather all required documents such as medical bills or receipts.</li>
+            <li>Submit a claim application through our portal or in person.</li>
+            <li>Undergo a brief review process by our claims team.</li>
+            <li>Receive notifications on the status and outcome of your claim.</li>
+          </ol>
+        </div>
+
+        <div className="transparent p-6 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-extrabold text-white mb-4">Types of Claims</h2>
+          <p className="text-lg text-white leading-relaxed mb-4">
+            Insurance policies cover a broad range of claims tailored to meet specific needs.
+            Here are the main types:
+          </p>
+          <ul className="list-disc list-inside text-white text-lg space-y-2">
+            <li><strong>Medical Claims:</strong> Covers hospital, doctor, and surgical expenses.</li>
+            <li><strong>Travel Claims:</strong> Addresses incidents like flight delays or lost luggage.</li>
+            <li><strong>Property Claims:</strong> Provides coverage for damage to insured properties.</li>
+          </ul>
         </div>
       </div>
     </div>

@@ -1,15 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import backgroundImage from "../assets/backgr.jpg";
+import backImage from "../assets/admin.jpg";
 import docMan from '../assets/docMan.png';
 import claim from '../assets/claims.png';
 import emergency from '../assets/emergency-care.jpg';
 import custSuppo from '../assets/customer_support.jpg';
 import telemed from '../assets/telemedicine.jpg';
 import { FaHeartbeat, FaFileAlt, FaAmbulance, FaLaptopMedical, FaRegFileAlt, FaPhoneAlt } from 'react-icons/fa'; // Importing icons for the services
+import headerImg from '../assets/back12.jpg'
 
-const Services = () => {
+export const Services = () => {
   const services = [
     {
       id: "network-access",
@@ -85,18 +86,19 @@ const Services = () => {
     },
   ];
 
+
   return (
     <div
-      className="relative pt-20 text-white"
+      className="relative text-white"
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(${backImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "150vh",
+        minHeight: "200vh",
       }}
     >
-      <div className="absolute inset-0 bg-black opacity-50 "></div>
-      <div className="relative z-10 px-6 pb-20">
+      <img src={headerImg} alt="" className="top-0 w-full h-64 brightness-100" />
+      <div className="relative z-10 px-6 py-20">
         <h1 className="text-5xl font-extrabold text-center mb-8 animate__animated animate__fadeIn animate__delay-1s">
           Our Services
         </h1>
@@ -107,7 +109,7 @@ const Services = () => {
           {services.map((service) => (
             <motion.div
               key={service.id}
-              className="bg-white text-black shadow-lg p-6 transition-transform transform hover:scale-125 hover:shadow-2xl border rounded-3xl h-96 relative overflow-hidden"
+              className="bg-white text-black shadow-lg p-6 transition-transform transform hover:scale-50 hover:shadow-xl border rounded-3xl h-96 relative overflow-hidden"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}

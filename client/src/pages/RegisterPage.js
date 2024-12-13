@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import backImage from "../assets/option4.jpg";
 
 function RegisterPage() {
     const [values, setValues] = useState({
@@ -29,7 +29,13 @@ function RegisterPage() {
     }
 
     return (
-        <div className='flex justify-center items-center min-h-screen bg-gradient-to-t from-gray-800 to-gray-350 pt-32 pb-32'>
+        <div className='flex justify-center items-center min-h-screen bg-gradient-to-t from-gray-800 to-gray-350 pt-32 pb-32'
+        style={{
+            backgroundImage: `url(${backImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "120vh",
+          }}>
             <div className='w-full max-w-md p-8 bg-gray-100 rounded-lg shadow-lg'>
                 <form className="space-y-6" onSubmit={register}>
                     <h1 className='text-2xl font-bold text-blue-600 text-center mb-4'>SignUp</h1>
@@ -65,9 +71,9 @@ function RegisterPage() {
 
                     <button 
     type='submit' 
-    className='w-full py-2 bg-blue-600 text-white rounded-lg 
-               hover:bg-blue-700 hover:scale-105 transition duration-200 ease-in-out 
-               active:bg-white-100 active:text-blue-800 active:scale-95'>
+    className='mx-20 w-1/2 px-2 py-2 bg-blue-600 text-white rounded-lg 
+              hover:bg-pink-700 hover:scale-125 transition duration-200 ease-in-out 
+              active:bg-white-100 active:text-blue-800 active:scale-95'>
     Register
 </button>
 

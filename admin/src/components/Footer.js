@@ -21,7 +21,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="/dashboard"
+                  href="/admin/dashboard"
                   className="text-gray-400 hover:text-yellow-400 transition duration-300"
                 >
                   Dashboard
@@ -29,7 +29,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/users"
+                  href="/admin/users"
                   className="text-gray-400 hover:text-yellow-400 transition duration-300"
                 >
                   User Management
@@ -37,7 +37,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/claims"
+                  href="/admin/claims"
                   className="text-gray-400 hover:text-yellow-400 transition duration-300"
                 >
                   Claims

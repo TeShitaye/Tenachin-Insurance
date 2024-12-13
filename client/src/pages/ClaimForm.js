@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const ClaimRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -19,12 +20,26 @@ const ClaimRequestForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Claim Request Submitted: ", formData);
-    alert("Claim request submitted successfully!");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    try {
+      await axios.post("http://localhost:5000/claims", formData);
+      alert("Claim submitted successfully.");
+      setFormData({
+        fullName: "",
+        email: "",
+        hospital: "",
+        policy: "",
+        paymentMethod: "",
+        description: "",
+      });
+    } catch (error) {
+      console.error("Error submitting claim:", error.response?.data || error.message);
+      alert("Failed to submit the claim request. Please try again.");
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-16">
       <div className="w-full max-w-3xl bg-white rounded-lg shadow-xl p-8">

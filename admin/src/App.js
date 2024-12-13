@@ -6,15 +6,16 @@ import Footer from "./components/Footer";
 
 // Import Pages
 import Dashboard from "./pages/Dashboard";
-import Users from "./pages/User";
-import Claims from "./pages/Claim";
+import Users from "./pages/Users";
+import ClaimsManagement from "./pages/Claim";
 import Services from "./pages/Service";
 import Reports from "./pages/Report";
 import Settings from "./pages/Setting";
 import Login from "./pages/Login";
+import Modal from "./components/Modal";
 
 const App = () => {
-  return (
+  return (  
     <Router>
       <div className="flex">
         {/* Sidebar */}
@@ -27,13 +28,14 @@ const App = () => {
             <Routes>
               {/* Define Routes */}
               <Route path="/" element={<Dashboard />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/claims" element={<Claims />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/users" element={<Users/>} />
+              <Route path="/admin/claims" element={<ClaimsManagement />} />
+              <Route path="/admin/services" element={<Services />} />
+              <Route path="/admin/reports" element={<Reports/>} />
+              <Route path="/admin/settings" element={<Settings />} />
+              <Route path="/admin/login" element={<Login />} />
+              <Route path="/admin/modal" element={<Modal/>} />
             </Routes>
           </div>
           <Footer />

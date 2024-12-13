@@ -10,7 +10,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Retrieve token from local storage
+    const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
       return;
@@ -23,7 +23,7 @@ const Profile = () => {
       .then((response) => {
         if (response.data && response.data.user) {
           setUser(response.data.user);
-          setClaims(response.data.claims || []);
+          setClaims(response.data.claims || []); // Ensure claims are updated
           setServices(response.data.services || []);
         } else {
           alert("Failed to load profile. Please log in again.");
@@ -130,22 +130,21 @@ const Profile = () => {
             <h2 className="text-xl font-bold text-gray-800">Claim Status</h2>
             {claims.length > 0 ? (
               <div className="space-y-4 mt-4">
-                {claims.map((claim, index) => (
-                  <div key={index} className="flex justify-between">
-                    <span className="text-gray-600">{claim.service}</span>
-                    <span
-                      className={`px-3 py-1 rounded-full text-white text-sm ${
-                        claim.status === "approved"
-                          ? "bg-green-500"
-                          : claim.status === "rejected"
-                          ? "bg-red-500"
-                          : "bg-yellow-500"
-                      }`}
-                    >
-                      {claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}
-                    </span>
-                  </div>
-                ))}
+                {claims
+                  .filter((claim) => claim.status === "approved")
+                  .map((claim, index) => (
+                    <div key={index} className="flex justify-between">
+                      <span className="text-gray-600">{claim.service}</span>
+                      <span
+                        className="px-3 py-1 rounded-full text-white text-sm bg-green-500"
+                      >
+                        Approved
+                      </span>
+                    </div>
+                  ))}
+                {claims.filter((claim) => claim.status !== "approved").length === 0 && (
+                  <p className="text-gray-600">No approved claims yet.</p>
+                )}
               </div>
             ) : (
               <p className="text-gray-600 mt-4">No claims submitted yet.</p>
@@ -157,9 +156,10 @@ const Profile = () => {
         <div className="text-center">
           <button
             onClick={handleClaimRequest}
-            
-          > <Link to="/claimform " className="font-semibold no-underline px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"> Request Claim to Admin</Link>
-           
+          >
+            <Link to="/claimform " className="font-semibold no-underline px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+              Request Claim to Admin
+            </Link>
           </button>
         </div>
       </main>

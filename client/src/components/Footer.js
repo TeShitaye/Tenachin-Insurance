@@ -1,9 +1,17 @@
 import React from "react";
 import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa"; // For social icons
-
+import backgroundImage from '../assets/back13.jpg'
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8">
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "61vh",
+      width: "100%",
+    }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Brand and Description */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -21,7 +29,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/register"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300" 
+                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300" 
                 >
                   Profile
                 </a>
@@ -29,7 +37,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/renew"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
+                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
                 >
                   Renew Policy
                 </a>
@@ -37,7 +45,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/claims"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
+                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
                 >
                   Claims
                 </a>
@@ -45,7 +53,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/about"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
+                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
                 >
                   About Us
                 </a>

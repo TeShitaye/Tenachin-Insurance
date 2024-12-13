@@ -1,21 +1,25 @@
 import React from "react";
 // import backgroundImage from "../assets/dashboard.jpg"; // Background image
 import teamImage from "../assets/background3.jpg"; // Team image
-import topImg from '../assets/aboutUs_Cover.png'
+import topImg from '../assets/back12.jpg'
+import back3 from '../assets/admin.jpg'
 
 const AboutUs = () => {
   return (
     
     <div
       className="bg-cover bg-center min-h-screen "
-      /* style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }} */
+      style={{
+        backgroundImage: `url(${back3})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "200vh",
+      }}
     >
-      <img src={topImg} alt="" className="w-full brightness-75"/>
+      <img src={topImg} alt="" className="w-full h-64 brightness-100"/>
          
       {/* Main content container with gradient background overlay */}
-      <div className="bg-gradient-to-t from-black via-black to-transparent min-h-screen py-12 px-4 sm:px-10">
+      <div className="min-h-screen py-12 px-4 sm:px-10">
         {/* Heading */}
         <h1 className="text-5xl font-extrabold text-transparent text-white text-center mb-8">
           About Us
@@ -73,7 +77,7 @@ const AboutUs = () => {
         </section>
 
         {/* Contact Section (Optional) */}
-        <section className="bg-black py-12">
+        <section className="bg-transparent py-12">
           <div className="max-w-5xl mx-auto text-center text-white">
             <h3 className="text-3xl font-bold mb-4">Get In Touch With Us</h3>
             <p className="mb-6 text-lg">

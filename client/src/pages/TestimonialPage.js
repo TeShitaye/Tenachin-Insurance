@@ -1,7 +1,7 @@
 import React from "react";
 import emergency from '../assets/emergency.jpg'
 import chronic from '../assets/chronic.jpg'
-import backgr from '../assets/service.jpg'
+import backgr from '../assets/admin.jpg'
 
 const TestimonialsAndCaseStudies = () => {
   const testimonials = [
@@ -44,12 +44,14 @@ const TestimonialsAndCaseStudies = () => {
   ];
 
   return (
-    <div className="relative pt-20 text-white"
+    <div className=" pt-20 text-white"
     style={{
       backgroundImage: `url(${backgr})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
-      minHeight: "180vh",
+      backgroundRepeat: "no-repeat",
+      height: "190vh",
+      width: "100%",
     }}>
       <h2 className="text-4xl font-extrabold text-center text-gray-200 mb-8">
         What Our Customers Say
@@ -83,7 +85,7 @@ const TestimonialsAndCaseStudies = () => {
         {caseStudies.map((caseStudy, index) => (
           <div
             key={index}
-            className="bg-indigo-800 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
+            className="bg-blue-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
           >
             <img
               src={caseStudy.image}
@@ -93,7 +95,7 @@ const TestimonialsAndCaseStudies = () => {
             <h3 className="text-2xl font-bold text-white">
               {caseStudy.title}
             </h3>
-            <p className="text-xl text-white  mt-2">{caseStudy.description}</p>
+            <p className="text-lg text-white  mt-2">{caseStudy.description}</p>
           </div>
         ))}
       </div>

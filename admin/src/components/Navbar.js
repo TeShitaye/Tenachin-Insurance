@@ -25,7 +25,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `hover:text-yellow-300 transition duration-300 ${
                   isActive ? "text-yellow-300 underline" : ""
-                }`
+                }no-underline font-bold text-lg px-4`
               }
             >
               Dashboard
@@ -35,7 +35,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `hover:text-yellow-300 transition duration-300 ${
                   isActive ? "text-yellow-300 underline" : ""
-                }`
+                }no-underline font-bold text-lg px-4`
               }
             >
               Users
@@ -45,7 +45,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `hover:text-yellow-300 transition duration-300 ${
                   isActive ? "text-yellow-300 underline" : ""
-                }`
+                } no-underline font-bold text-lg px-4`
               }
             >
               Claims
@@ -55,7 +55,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `hover:text-yellow-300 transition duration-300 ${
                   isActive ? "text-yellow-300 underline" : ""
-                }`
+                }no-underline font-bold text-lg px-4`
               }
             >
               Reports
