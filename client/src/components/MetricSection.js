@@ -2,7 +2,7 @@ import React from "react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { FaUsers, FaClipboardList, FaShieldAlt, FaCalendarAlt } from "react-icons/fa";
-import backgroundImage from '../assets/backXYZ.jpg'
+//import backgroundImage from '../assets/option10.jpeg'
 
 const MetricsSection = () => {
   const { ref: sectionRef, inView: sectionInView } = useInView({
@@ -18,15 +18,15 @@ const MetricsSection = () => {
   ];
 
   return (
-    <div ref={sectionRef} className="py-9"
-    style={{
+    <div ref={sectionRef} className="py-9 rounded-lg shadow-xl"
+    /* style={{
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       height: "50vh",
       width: "100%",
-    }}>
+    }} */ >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 cursor-pointer">
           {metrics.map((metric, index) => (

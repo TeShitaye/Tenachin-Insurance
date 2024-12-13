@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from '../assets/admin.jpg'
+//import backgroundImage from '../assets/admin.jpg'
 
 const BlogAndNews = () => {
   const articles = [
@@ -33,15 +33,15 @@ const BlogAndNews = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-l from-gray-800 to-gray-350"
-    style={{
+    <section className="bg-transparent l pt-8 pb-24 ">
+  {/*  style={{
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       height: "110vh",
       width: "100%",
-    }}>
+    }} */ }
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <h2 className="text-4xl font-extrabold text-center text-white mb-8">
           Blog & News

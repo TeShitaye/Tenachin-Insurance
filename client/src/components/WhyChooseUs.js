@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from '../assets/backXYZ.jpg'
+//import backgroundImage from '../assets/admin.jpg'
 const WhyChooseUs = () => {
   const features = [
     {
@@ -27,15 +27,15 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-tl from-cyan-900 to-gray-400 py-12 px-6 text-white"
-    style={{
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "90vh",
-      width: "100%",
-    }}>
+    <section className="bg-transparent rounded-lg shadow-xl py-12 px-6 text-white">
+    {/*  style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "110vh",
+        width: "100%",
+      }} */ }
       
       <div className=" mx-auto px-6 md:px-12 lg:px-20">
         <h2 className="text-4xl font-extrabold text-center mb-8 tracking-wider">

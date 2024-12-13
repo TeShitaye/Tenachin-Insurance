@@ -7,11 +7,18 @@ import TestimonialsAndCaseStudies from '../pages/TestimonialPage'
 import AboutUsSummary from '../pages/AboutusSummery'
 import ServiceSummary from './ServiceSumery'
 import MetricsSection from './MetricSection'
-
+import backgroundImage from '../assets/option30.jpg'
 
 const Home = () => {
   return (
-    <div>
+    <div    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "750vh",
+      width: "100%",
+    }}>
       <Navbar/>
       <Dashboard/>
       <AboutUsSummary/>

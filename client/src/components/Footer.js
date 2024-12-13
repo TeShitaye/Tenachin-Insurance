@@ -9,10 +9,10 @@ const Footer = () => {
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      height: "61vh",
+      height: "50vh",
       width: "100%",
     }}>
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 h-44">
         {/* Brand and Description */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="flex flex-col items-start">
@@ -36,10 +36,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/renew"
+                  href="/policies"
                   className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
                 >
-                  Renew Policy
+                  Read Policy
                 </a>
               </li>
               <li>
@@ -93,18 +93,14 @@ const Footer = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col justify-center">
             <h4 className="text-2xl font-semibold text-white mb-4">Contact Us</h4>
-            <p className="text-gray-400 hover:text-yellow-400 transition duration-300 mb-2">📞 +251-941208343</p>
-            <p className="text-gray-400 hover:text-yellow-400 transition duration-300">📧 support@tenachin.com</p>
-          </div>
-        </div>
-
-        {/* Social Media */}
-        <div className="mt-8 flex justify-center gap-6">
-          <a
+            <p className="text-gray-300 hover:text-yellow-400 transition duration-300 mb-2">📞 +251-941208343</p>
+            <p className="text-gray-300 hover:text-yellow-400 transition duration-300">📧 support@tenachin.com</p>
+           <ul className="flex gap-6">
+           <a
             href="https://instagram.com"
-            className="text-3xl text-white hover:text-yellow-400 transition duration-300"
+            className="text-3xl text-white transition duration-300 hover:scale-125 ease-out"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -112,7 +108,7 @@ const Footer = () => {
           </a>
           <a
             href="https://twitter.com"
-            className="text-3xl text-white hover:text-yellow-400 transition duration-300"
+            className="text-3xl text-white transition duration-300 hover:scale-125 ease-out"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -120,17 +116,23 @@ const Footer = () => {
           </a>
           <a
             href="https://linkedin.com"
-            className="text-3xl text-white hover:text-yellow-400 transition duration-300"
+            className="text-3xl text-white  transition duration-300 hover:scale-125 ease-out"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaLinkedin />
           </a>
+           </ul>
+            
+          </div>
+               {/* Social Media */}
         </div>
+
+   
       </div>
 
       {/* Footer Bottom */}
-      <div className="mt-8 border-t border-gray-700 pt-4 text-center text-sm text-gray-500">
+      <div className="mt-8 border-t border-blue-600 pt-4 text-center text-sm text-gray-200">
         <p>© {new Date().getFullYear()} Tenachin. All rights reserved.</p>
       </div>
     </footer>

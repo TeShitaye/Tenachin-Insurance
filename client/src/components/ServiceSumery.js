@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; // Import framer-motion for animations
 import { FaFileInvoice, FaAmbulance, FaStethoscope } from 'react-icons/fa'; // Importing relevant icons
-import backgroundImage from '../assets/back12.jpg'
+//import backgroundImage from '../assets/admin.jpg'
 
 
 const ServiceSummary = () => {
@@ -31,15 +31,15 @@ const ServiceSummary = () => {
   ];
 
   return (
-    <div className="p-8 bg-gray-100 rounded-lg shadow-md "
-    style={{
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "70vh",
-      width: "100%",
-    }}>
+    <div className="p-8 bg-transparent rounded-lg shadow-xl ">
+    {/*  style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "110vh",
+        width: "100%",
+      }} */ }
     <h2 className="text-4xl font-extrabold mb-6 text-center text-white">Our Services</h2>
 <hr className="w-64 h-1 mx-auto bg-red-500 border-0 rounded-full mt-4 mb-8" />
 
@@ -76,7 +76,7 @@ const ServiceSummary = () => {
       </div>
       <div className="mt-8 text-center">
         <Link to="/services">
-          <button className="px-6 py-3 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+          <button className="no-underline px-8 py-3 bg-blue-400 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-pink-700 hover:text-blue-400 hover: transition-all duration-300">
             View All Services
           </button>
         </Link>

@@ -4,13 +4,13 @@ import backgroundImage from '../assets/backXYZ.jpg'
 
 const AboutUsSummary = () => {
   return (
-    <div className="bg-gradient-to-tl from-cyan-900 to-gray-400 py-12 px-6"
+    <div className="bg-gradient-to-tl from-cyan-900 to-gray-400 py-12 shadow-2xl px-6"
     style={{
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      height: "90vh",
+      height: "80vh",
       width: "100%",
     }}>
       <div className="max-w-5xl mx-auto text-center">

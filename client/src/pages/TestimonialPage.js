@@ -1,7 +1,7 @@
 import React from "react";
 import emergency from '../assets/emergency.jpg'
 import chronic from '../assets/chronic.jpg'
-import backgr from '../assets/admin.jpg'
+//import backgr from '../assets/admin.jpg'
 
 const TestimonialsAndCaseStudies = () => {
   const testimonials = [
@@ -44,15 +44,15 @@ const TestimonialsAndCaseStudies = () => {
   ];
 
   return (
-    <div className=" pt-20 text-white"
-    style={{
-      backgroundImage: `url(${backgr})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "190vh",
-      width: "100%",
-    }}>
+    <div className=" pt-20 pb-16 text-white  rounded-lg shadow-xl">
+    {/*  style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "110vh",
+        width: "100%",
+      }} */ }
       <h2 className="text-4xl font-extrabold text-center text-gray-200 mb-8">
         What Our Customers Say
       </h2>
@@ -61,18 +61,18 @@ const TestimonialsAndCaseStudies = () => {
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className="bg-blue-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
+            className="bg-gray-200 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
           >
             <img
               src={testimonial.image}
               alt={testimonial.name}
               className="w-24 h-24 bg-transparent rounded-full mb-4"
             />
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-blue-700">
               {testimonial.name}
             </h3>
-            <p className="text-sm text-white mb-4">{testimonial.location}</p>
-            <p className="text-white">{testimonial.feedback}</p>
+            <p className="text-sm text-black mb-4">{testimonial.location}</p>
+            <p className="text-black ">{testimonial.feedback}</p>
           </div>
         ))}
       </div>
@@ -85,17 +85,17 @@ const TestimonialsAndCaseStudies = () => {
         {caseStudies.map((caseStudy, index) => (
           <div
             key={index}
-            className="bg-blue-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
+            className="bg-gray-200 shadow-lg rounded-lg p-6 flex flex-col items-center text-center"
           >
             <img
               src={caseStudy.image}
               alt={caseStudy.title}
               className="w-full h-40 object-cover rounded-lg mb-4"
             />
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-blue-700">
               {caseStudy.title}
             </h3>
-            <p className="text-lg text-white  mt-2">{caseStudy.description}</p>
+            <p className="text-lg text-black  mt-2">{caseStudy.description}</p>
           </div>
         ))}
       </div>
