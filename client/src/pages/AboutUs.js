@@ -2,7 +2,7 @@ import React from "react";
 // import backgroundImage from "../assets/dashboard.jpg"; // Background image
 import teamImage from "../assets/background3.jpg"; // Team image
 import topImg from '../assets/back12.jpg'
-import back3 from '../assets/admin.jpg'
+import back3 from '../assets/admin1.jpg'
 
 const AboutUs = () => {
   return (
@@ -19,44 +19,59 @@ const AboutUs = () => {
       <img src={topImg} alt="" className="w-full h-64 brightness-100"/>
          
       {/* Main content container with gradient background overlay */}
-      <div className="min-h-screen py-12 px-4 sm:px-10">
+      <div className="min-h-screen py-12 px-4 sm:px-10 w-full">
         {/* Heading */}
         <h1 className="text-5xl font-extrabold text-transparent text-white text-center mb-8">
           About Us
         </h1>
 
         {/* About Us Section */}
-        <section className="text-white">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg text-white leading-relaxed mb-8">
-              Welcome to HealthCare, where we provide high-quality healthcare services designed to meet your needs.
-              Our team is dedicated to delivering compassionate, expert care to ensure that you and your loved ones are
-              well taken care of. With a range of services and coverage options, we strive to make healthcare accessible,
-              affordable, and convenient for everyone.
+        <section className="text-white ">
+          <div className="max-w-4xl mx-auto ">
+            <div className="bg-transparent shadow-2xl rounded-w-full px-32 py-8">
+            <p className="text-lg text-white leading-relaxed mb-8 ">
+            <strong>Welcome to Tenachin Health Insurance</strong> <br/>
+At Tenachin Health Insurance, we are committed to empowering individuals and families
+ by ensuring access to quality healthcare without the financial burden. Our service provides comprehensive coverage of hospital service fees, 
+helping our users focus on their health and recovery without worrying about the cost.
+With a user-friendly platform and partnerships with leading hospitals, 
+Tenachin Health Insurance strives to simplify health insurance while delivering exceptional value. Whether you're seeking coverage for routine care or unexpected medical expenses,
+ we are here to support you every step of the way.
             </p>
-
             <p className="text-lg text-white leading-relaxed mb-8">
-              At HealthCare, we understand the importance of having reliable health coverage. Whether it's emergency
-              care, doctor appointments, or surgical procedures, we provide comprehensive policies to support your health
-              and well-being. Our goal is to ensure that you receive the best care possible when you need it the most.
+            < strong>Why Choose Tenachin Health Insurance?</strong> <br/>
+            <ul class="list-disc">
+            <li>Transparent and reliable health insurance plans.</li>
+            <li>Broad network of partnered hospitals across the country.</li>
+            <li>Dedicated support to help you navigate your healthcare needs.</li>
+            </ul>
             </p>
-
-            <h2 className="text-3xl font-semibold text-white mb-6 text-center">
+            </div>
+          <div className="bg-transparent shadow-2xl rounded-t-full px-32 py-2">
+          <h2 className="text-3xl font-semibold text-white mb-6 text-center">
               Our Mission
             </h2>
             <p className="text-lg text-white leading-relaxed mb-8">
-              Our mission is to provide comprehensive, accessible, and affordable healthcare to all our members. We aim
-              to be a leader in the healthcare industry by offering innovative services and solutions that put the needs of
-              our patients first.
+            < strong>Why Choose Tenachin Health Insurance?</strong> <br/>
+            <ul class="list-disc">
+            <li>Offering innovative solutions to reduce the financial barriers to healthcare.</li>
+            <li>Building strong relationships with hospitals to ensure seamless service delivery.</li>
+            <li>Promoting health awareness and empowering communities to prioritize their well-being</li>
+            </ul>
             </p>
-
-            <h2 className="text-3xl font-semibold text-white mb-6 text-center">
+          </div>
+          <div className="bg-transparent shadow-2xl rounded-b-full px-32 py-4 w-full">
+          <h2 className="text-3xl font-semibold text-white mb-6 text-center">
               Our Vision
             </h2>
-            <p className="text-lg text-gray-200 leading-relaxed mb-8">
-              To create a healthier community by ensuring that everyone has access to quality healthcare services. We
-              envision a world where healthcare is not only about treatment but about fostering long-term wellness.
+            <p className="text-lg text-gray-200 leading-relaxed mb-8 bx-8">
+            To become the foremost health insurance provider in Ethiopia, transforming the way people access healthcare by 
+            ensuring financial security and peace of mind.
+             By fostering trust, strengthening partnerships with healthcare providers, and leveraging technology, we aim to set a benchmark for excellence in
+             health insurance services and contribute to the nation’s overall health and prosperity.
             </p>
+          </div>
+          
           </div>
         </section>
 

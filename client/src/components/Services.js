@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import backImage from "../assets/admin.jpg";
+import backImage from "../assets/admin1.jpg";
 import docMan from '../assets/docMan.png';
 import claim from '../assets/claims.png';
 import emergency from '../assets/emergency-care.jpg';
@@ -109,13 +109,13 @@ export const Services = () => {
           {services.map((service) => (
             <motion.div
               key={service.id}
-              className="bg-white text-black shadow-lg p-6 transition-transform transform hover:scale-50 hover:shadow-xl border rounded-3xl h-96 relative overflow-hidden"
+              className="bg-white text-black shadow-lg p-6 border rounded-3xl h-96 relative overflow-hidden"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5 }}
               whileHover={{
-                scale: 1.25, // Increased scale to 1.25 for 25% growth
+                scale: 0.92, // Increased scale to 1.25 for 25% growth
                 boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.3)", // Increased shadow effect for hover
                 zIndex: 10, // Bring the hovered card to the top of others
               }}

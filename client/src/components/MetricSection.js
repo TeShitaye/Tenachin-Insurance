@@ -32,7 +32,7 @@ const MetricsSection = () => {
           {metrics.map((metric, index) => (
             <div
               key={index}
-              className="flex flex-col items-center bg-indigo-800 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105"
+              className="flex flex-col items-center bg-indigo-800 p-6 rounded-lg shadow-2xl transform transition-transform hover:scale-105"
             >
               <div className="mb-4">{metric.icon}</div>
               <h3 className="text-4xl font-bold text-white">

@@ -3,6 +3,7 @@ import cors from 'cors';
 import connectDB from './db.js';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'
 
 
 const SECRET_KEY = "your_secret_key"; // Replace with your secret key
@@ -38,39 +39,165 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String, required: true },
-  age: { type: Number, required: true },
-  region: { type: String, required: true },
-  zone: { type: String, required: true },
-  woreda: { type: String, required: true },
-  kebele: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  isPremium: { type: Boolean, default: false } // Add isPremium
 });
-
 // User Model
 const User = mongoose.model('User', userSchema);
+
+// PremiumUser Schema (Separate Table for Premium Users)
+const premiumUserSchema = new mongoose.Schema({
+  username: { type: String, required: true },  // Full Name
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  isPremium: { type: Boolean, default: true }, // Premium Flag
+});
+
+const PremiumUser = mongoose.model('PremiumUser', premiumUserSchema);
 
 // Routes
 
 // Registration Endpoint
-app.post('/register', async (req, res) => {
-  try {
-      console.log("Received register data:", req.body);
-      const { username, email, phone, age, region, zone, woreda, kebele, password } = req.body;
+// Registration Endpoint
 
-      // Check for existing user
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-          return res.status(400).json({ Status: "Error", Error: "Email already registered" });
-      }
-      // Save new user
-      const newUser = new User({ username, email, phone, age, region, zone, woreda, kebele, password });
-      await newUser.save();
-      res.status(201).json({ Status: "Success", Message: "Registered successfully" });
+app.post('/premium-register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    
+    // Check if email already exists
+    const existingUser = await PremiumUser.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create new Premium User
+    const newUser = new PremiumUser({ username, email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(201).json({ message: "Premium user registered successfully!" });
   } catch (error) {
-      console.error("Error during registration:", error);
-      res.status(500).json({ Status: "Error", Error: "Server error during registration" });
+    res.status(500).json({ message: "Error registering premium user" });
   }
 });
+
+// Premium User Login
+app.post('/premium-login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const user = await PremiumUser.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Compare password with the hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' });
+
+    res.status(200).json({
+      message: "Login successful",
+      token: token
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error during login" });
+  }
+});
+// Backend route to get premium user profile data
+app.get('/premium-profile', async (req, res) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'your_secret_key');
+    const userId = decoded.id;
+    
+    // Fetch user details
+    const user = await PremiumUser.findById(userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Fetch user claims and services
+    const claims = await Claim.find({ userId: userId });
+    const services = await Service.find({ userId: userId });
+
+    res.status(200).json({ user, claims, services });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+// Backend route to submit a claim
+app.post('/premium-claims', async (req, res) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'your_secret_key');
+    const userId = decoded.id;
+
+    // Create new claim
+    const { fullName, email, hospital, policy, paymentMethod, description, priority } = req.body;
+    const newClaim = new Claim({
+      userId,
+      fullName,
+      email,
+      hospital,
+      policy,
+      paymentMethod,
+      description,
+      priority,
+      status: 'pending', // Default status is pending
+    });
+
+    await newClaim.save();
+    res.status(201).json({ message: 'Claim submitted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error submitting claim' });
+  }
+});
+
+app.post('/register', async (req, res) => {
+  try {
+    console.log("Received register data:", req.body);
+    const { username, email, phone, password, confirmPassword } = req.body;
+
+    // Password match validation
+    if (password !== confirmPassword) {
+      return res.status(400).json({ Status: "Error", Error: "Passwords do not match" });
+    }
+
+    // Check for existing user
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ Status: "Error", Error: "Email already registered" });
+    }
+
+    // Save new user
+    const newUser = new User({ username, email, phone, password });
+    await newUser.save();
+    res.status(201).json({ Status: "Success", Message: "Registered successfully" });
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res.status(500).json({ Status: "Error", Error: "Server error during registration" });
+  }
+});
+
 
 app.post('/login', async (req, res) => {
   try {
@@ -163,6 +290,36 @@ app.put('/users/:id', verifyToken, async (req, res) => {
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ Status: "Error", Error: "Server error updating user" });
+  }
+});
+app.get('/premium', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ Status: "Error", Error: "User not found" });
+    }
+
+    if (!user.isPremium) {
+      return res.status(403).json({ Status: "Error", Error: "Access denied. Not a premium user." });
+    }
+
+    res.status(200).json({ Status: "Success", Message: "Welcome to the premium section." });
+  } catch (error) {
+    console.error("Error fetching premium content:", error);
+    res.status(500).json({ Status: "Error", Error: "Server error fetching premium content." });
+  }
+});
+
+app.put('/users/upgrade', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.userId, { isPremium: true }, { new: true });
+    if (!user) {
+      return res.status(404).json({ Status: "Error", Error: "User not found" });
+    }
+    res.status(200).json({ Status: "Success", Message: "Upgraded to premium successfully" });
+  } catch (error) {
+    console.error("Error upgrading to premium:", error);
+    res.status(500).json({ Status: "Error", Error: "Server error upgrading to premium" });
   }
 });
 

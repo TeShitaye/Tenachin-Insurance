@@ -53,7 +53,7 @@ const TestimonialsAndCaseStudies = () => {
         height: "110vh",
         width: "100%",
       }} */ }
-      <h2 className="text-4xl font-extrabold text-center text-gray-200 mb-8">
+      <h2 className="text-4xl font-extrabold text-center text-white mb-8">
         What Our Customers Say
       </h2>
 

@@ -43,11 +43,11 @@ const ServiceSummary = () => {
     <h2 className="text-4xl font-extrabold mb-6 text-center text-white">Our Services</h2>
 <hr className="w-64 h-1 mx-auto bg-red-500 border-0 rounded-full mt-4 mb-8" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex-col">
         {featuredServices.map((service) => (
           <motion.div
             key={service.id}
-            className="relative p-4 bg-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
+            className="relative h-64 p-4 text-white  bg-indigo-800 rounded-lg shadow-lg hover:scale-125 transition-transform duration-300 ease-in-out"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -59,15 +59,15 @@ const ServiceSummary = () => {
             }}
           >
             {/* Icon */}
-            <div className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-lg">
+            <div className="px-32 py-0">
               {service.icon}
             </div>
 
             {/* Card Content */}
-            <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-            <p className="text-gray-600 mb-4">{service.description}</p>
+            <h3 className="text-xl font-bold mb-2 pt-6 px-12">{service.title}</h3>
+            <p className="text-white mb-4 px-12">{service.description}</p>
             <Link to={service.link}>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+              <button className="w-64 py-2 px-2 mx-12 bg-blue-600 text-white rounded hover:bg-blue-700">
                 View More
               </button>
             </Link>

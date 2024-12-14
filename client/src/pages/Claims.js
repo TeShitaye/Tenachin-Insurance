@@ -1,6 +1,6 @@
 import React from "react";
 import claim_header from "../assets/back12.jpg";
-import backgroundImage from '../assets/admin.jpg'
+import backgroundImage from '../assets/admin1.jpg'
 const claimsData = [
   {
     id: 1,

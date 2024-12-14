@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import backgroundImage from "../assets/admin1.jpg";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -59,8 +60,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
+    <div className="p-6 bg-gray-100 min-h-screen"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "80vh",
+      width: "100%",
+    }}>
+      <h1 className="text-4xl font-bold text-gray-100mb-6">Admin Dashboard</h1>
 
       {/* Summary Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
