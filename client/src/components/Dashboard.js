@@ -5,20 +5,20 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   return (
     <div
-      className="pt-64 pb-64 relative"
+      className="relative py-2"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: "150vh",
+        height: "170vh",
         width: "100%",
       }}
     >
       {/* Content Section */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col justify-center items-center text-center text-white">
+      <div className="absolute bottom-12 bg-transparent rounded-b-full shadow-2xl left-0 right-0 z-10 flex flex-col justify-center items-center text-center text-white">
         {/* Header Section */}
-        <div className="mb-2">
+        <div className="mb-0 gap-2">
           <h1 className="text-4xl font-extrabold mb-4">
             Get Started with Health Coverage
           </h1>
@@ -36,20 +36,6 @@ const Dashboard = () => {
               active:bg-white-100 active:text-blue-800 active:scale-95"
             >
               Register Now
-            </button>
-          </Link>
-        </div>
-        <div>
-          <p className="text-2xl mb-6">
-            Become a premium member to enjoy exclusive benefits.
-          </p>
-          <Link to="/upgrade">
-            <button
-              type="button"
-              className="mx-20 w-1/3 px-2 py-2 text-lg text-white bg-green-500 rounded-3xl font-bold
-    hover:bg-green-600 hover:scale-125 transition duration-200 ease-in-out"
-            >
-              Upgrade to Premium
             </button>
           </Link>
         </div>

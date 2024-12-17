@@ -20,8 +20,8 @@ const Sidebar = () => {
     <div className="flex">
       {/* Sidebar Container */}
       <div
-        className={`bg-gradient-to-t from-blue-800 to-blue-600 text-white ${
-          isOpen ? "w-64" : "w-16"
+        className={`bg-gradient-to-b from-gray-800 to-gray-600 text-white ${
+          isOpen ? "w-32" : "w-16"
         } min-h-screen transition-width duration-300 shadow-lg`}
       >
         <button

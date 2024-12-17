@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'
 
 const PremiumProfile = () => {
   const [user, setUser] = useState(null); 
@@ -18,14 +18,14 @@ const PremiumProfile = () => {
         const currentTime = Date.now() / 1000;
         if (decodedToken.exp < currentTime) {
           localStorage.removeItem('token');
-          navigate('/login');
+          navigate('premium-login');
         }
       } catch (err) {
         console.error('Token decoding failed', err);
-        navigate('/login');
+        navigate('premium-login');
       }
     } else {
-      navigate('/login');
+      navigate('/premium-login');
     }
 
     axios
@@ -39,16 +39,16 @@ const PremiumProfile = () => {
           setServices(response.data.services || []);
         } else {
           alert("Failed to load profile. Please log in again.");
-          navigate("/login");
+          navigate("/premium-login");
         }
       })
-      .catch(() => navigate("/login"))
+      .catch(() => navigate("/premium-login"))
       .finally(() => setLoading(false));
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/premium-login");
   };
 
   if (loading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -86,9 +86,9 @@ const PremiumProfile = () => {
           <div className="bg-white shadow rounded-lg p-4">
             <h2 className="text-xl font-bold text-gray-800">User Information</h2>
             <div className="text-gray-600 mt-4 space-y-2">
+            <p><strong>Full NAme: </strong> {user?.username}</p>
               <p><strong>Email:</strong> {user?.email}</p>
               <p><strong>Phone:</strong> {user?.phone}</p>
-              <p><strong>Region:</strong> {user?.region || "N/A"}</p>
               <p><strong>Subscription Plan:</strong> {user?.subscriptionPlan || "Premium"}</p>
             </div>
           </div>
@@ -127,7 +127,7 @@ const PremiumProfile = () => {
 
         {/* Request Claim Button */}
         <div className="text-center">
-          <Link to="/premium-claim-form" className="font-semibold no-underline px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+          <Link to="/premium-claims" className="font-semibold no-underline px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
             Request Priority Claim
           </Link>
         </div>

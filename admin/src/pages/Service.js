@@ -22,6 +22,7 @@ const Users = () => {
     };
 
     fetchUsers();
+
   }, []);
 
   const handleDelete = async (userId) => {

@@ -3,7 +3,7 @@ import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa"; // For soci
 import backgroundImage from '../assets/back13.jpg'
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8"
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8 px-8 "
     style={{
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: "cover",
@@ -12,7 +12,7 @@ const Footer = () => {
       height: "50vh",
       width: "100%",
     }}>
-      <div className="max-w-7xl mx-auto px-6 h-44">
+      <div className="max-w-7xl mx-16 h-44 ">
         {/* Brand and Description */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="flex flex-col items-start">
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start ml-32 w-64">
             <h4 className="text-2xl font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
@@ -61,7 +61,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Our Services */}
+          {/* Our Services 
           <div className="flex flex-col items-start">
             <h4 className="text-2xl font-semibold text-white mb-4">Our Services</h4>
             <ul className="space-y-2">
@@ -90,10 +90,10 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </div>         */}
 
           {/* Contact Information */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center ml-32 w-64">
             <h4 className="text-2xl font-semibold text-white mb-4">Contact Us</h4>
             <p className="text-gray-300 hover:text-yellow-400 transition duration-300 mb-2">📞 +251-941208343</p>
             <p className="text-gray-300 hover:text-yellow-400 transition duration-300">📧 support@tenachin.com</p>

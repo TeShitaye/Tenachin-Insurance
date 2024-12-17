@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import backgroundImage from "../assets/admin1.jpg";
+import backgroundImage from "../assets/admin.jpg";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -60,16 +60,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen"
+    <div className="p-8 relative"
     style={{
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      height: "80vh",
+      height: "130vh",
       width: "100%",
     }}>
-      <h1 className="text-4xl font-bold text-gray-100mb-6">Admin Dashboard</h1>
+      <h1 className="text-4xl font-bold text-gray-100 mb-6">Admin Dashboard</h1>
 
       {/* Summary Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -100,7 +100,7 @@ const Dashboard = () => {
       </div>
 
       {/* Pie Chart Section */}
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-white shadow rounded-lg mb-36 pb-16 w-1/2 h-72">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Claims Overview</h2>
         <Pie data={pieData} />
       </div>

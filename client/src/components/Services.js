@@ -9,7 +9,10 @@ import custSuppo from '../assets/customer_support.jpg';
 import telemed from '../assets/telemedicine.jpg';
 import { FaHeartbeat, FaFileAlt, FaAmbulance, FaLaptopMedical, FaRegFileAlt, FaPhoneAlt } from 'react-icons/fa'; // Importing icons for the services
 import headerImg from '../assets/back12.jpg'
-
+import hosp from '../assets/hospNet.png'
+import preAproval from '../assets/policies.jpg'
+import wellnes from '../assets/chronic.jpg'
+import manage from '../assets/manag.jpeg'
 export const Services = () => {
   const services = [
     {
@@ -18,7 +21,7 @@ export const Services = () => {
       description: "Access a wide network of trusted hospitals and healthcare providers.",
       link: "/hospital-network",
       icon: <FaHeartbeat className="text-4xl text-green-500" />,
-      Image: "",
+      Image: hosp,
     },
     {
       id: "claims-management",
@@ -34,7 +37,7 @@ export const Services = () => {
       description: "Get pre-approval for treatments and procedures without hassle.",
       link: "/pre-authorization",
       icon: <FaRegFileAlt className="text-4xl text-orange-500" />,
-      Image: ""
+      Image: preAproval,
     },
     {
       id: "document-management",
@@ -58,7 +61,7 @@ export const Services = () => {
       description: "Stay healthy with wellness programs and preventive care discounts.",
       link: "/wellness-benefits",
       icon: <FaHeartbeat className="text-4xl text-green-400" />,
-      Image: ""
+      Image: wellnes
     },
     {
       id: "telemedicine-services",
@@ -82,7 +85,7 @@ export const Services = () => {
       description: "Easily renew, upgrade, or modify your insurance policy online.",
       link: "/policy-management",
       icon: <FaFileAlt className="text-4xl text-indigo-500" />,
-      Image: ""
+      Image: manage
     },
   ];
 

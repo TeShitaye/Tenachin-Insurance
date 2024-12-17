@@ -1,6 +1,7 @@
 import React from "react";
 //import backgroundImage from '../assets/admin.jpg'
-
+import claimIMG from '../assets/claimIMG.jpg'
+import telemed from '../assets/telemedicine.jpg'
 const BlogAndNews = () => {
   const articles = [
     {
@@ -17,8 +18,7 @@ const BlogAndNews = () => {
       description:
         "A step-by-step guide to filing and tracking your health insurance claims easily.",
       date: "Nov 25, 2024",
-      image:
-        "https://images.unsplash.com/photo-1607013275489-8088b22fd0a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      image:claimIMG,
       link: "/blog/claims-guide",
     },
     {
@@ -26,9 +26,8 @@ const BlogAndNews = () => {
       description:
         "Explore how telemedicine is transforming healthcare and what it means for health insurance.",
       date: "Nov 18, 2024",
-      image:
-        "https://images.unsplash.com/photo-1584349862072-8c3413d4b25f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      link: "/blog/telemedicine-future",
+      image:telemed,
+            link: "/blog/telemedicine-future",
     },
   ];
 

@@ -20,7 +20,6 @@ function LoginPage() {
         if (res.data.Status === "Success") {
           // Save the token in local storage
           localStorage.setItem("token", res.data.Token);
-  
           // Navigate to the profile page
           navigate("/profile");
         } else {
@@ -79,4 +78,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-

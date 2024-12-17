@@ -16,7 +16,7 @@ const Home = () => {
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      height: "750vh",
+      height: "780vh",
       width: "100%",
     }}>
       <Navbar/>

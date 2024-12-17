@@ -25,7 +25,7 @@ const PremiumClaimForm = () => {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:5000/premium-claims", formData, {
+      await axios.post("http://localhost:5000/premiumclaims", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       alert("Claim submitted successfully.");

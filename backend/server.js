@@ -49,20 +49,28 @@ const User = mongoose.model('User', userSchema);
 const premiumUserSchema = new mongoose.Schema({
   username: { type: String, required: true },  // Full Name
   email: { type: String, required: true, unique: true },
+  phone:{type:String,required:true,unique:true},
   password: { type: String, required: true },
   isPremium: { type: Boolean, default: true }, // Premium Flag
 });
 
 const PremiumUser = mongoose.model('PremiumUser', premiumUserSchema);
 
-// Routes
+// Service Schema
+const serviceSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "PremiumUser", required: true },
+  serviceName: { type: String, required: true },
+  description: { type: String },
+  status: { type: String, default: "active" }, // Example: active, inactive
+  createdAt: { type: Date, default: Date.now },
+});
 
-// Registration Endpoint
-// Registration Endpoint
+const Service = mongoose.model("Service", serviceSchema);
+
 
 app.post('/premium-register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, phone, password } = req.body;
     
     // Check if email already exists
     const existingUser = await PremiumUser.findOne({ email });
@@ -75,7 +83,7 @@ app.post('/premium-register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new Premium User
-    const newUser = new PremiumUser({ username, email, password: hashedPassword });
+    const newUser = new PremiumUser({ username, email,phone, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: "Premium user registered successfully!" });
@@ -140,7 +148,8 @@ app.get('/premium-profile', async (req, res) => {
   }
 });
 // Backend route to submit a claim
-app.post('/premium-claims', async (req, res) => {
+
+/* app.post('/premiumclaims', async (req, res) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
@@ -169,6 +178,193 @@ app.post('/premium-claims', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error submitting claim' });
+  }
+}); 
+
+
+// Claim Schema
+const claimSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  hospital: { type: String, required: true },
+  policy: { type: String, required: true },
+  paymentMethod: { type: String, required: true },
+  description: { type: String, required: true },
+  status: { type: String, default: "Pending" },
+});
+const Claim = mongoose.model("Claim", claimSchema);
+
+// Claim Schema
+const premiumclaimSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  hospital: { type: String, required: true },
+  policy: { type: String, required: true },
+  paymentMethod: { type: String, required: true },
+  description: { type: String, required: true },
+  status: { type: String, default: "Pending" },
+});
+const premiumClaim = mongoose.model("Claim", claimSchema);
+
+
+// Endpoint to fetch claims (Admin View) ###########################
+app.get("/claims", async (req, res) => {
+  try {
+    const claims = await Claim.find();
+    res.status(200).json(claims);
+  } catch (error) {
+    console.error("Error fetching claims:", error);
+    res.status(500).json({ Status: "Error", Error: "Server error while fetching claims." });
+  }
+});
+
+// Update Claim Status and Propagate to User's Profile
+app.put("/claims/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body; // New status: "approved" or "rejected"
+
+    const updatedClaim = await Claim.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true } // Return the updated claim
+    );
+
+    if (!updatedClaim) {
+      return res.status(404).json({ Status: "Error", Error: "Claim not found" });
+    }
+
+    // Update claim in the user's profile
+    const user = await User.findOne({ email: updatedClaim.email }); // Match by claim's email
+    if (user) {
+      const userClaims = user.claims || []; // Ensure claims array exists
+      const claimIndex = userClaims.findIndex((c) => c._id.toString() === id);
+      if (claimIndex !== -1) {
+        userClaims[claimIndex].status = status; // Update the status in the user's claims
+      } else {
+        userClaims.push({
+          service: updatedClaim.policy, // Example mapping: use "policy" as the service name
+          status,
+        });
+      }
+      user.claims = userClaims;
+      await user.save();
+    }
+
+    res.status(200).json({ Status: "Success", Message: "Claim updated successfully", Claim: updatedClaim });
+  } catch (error) {
+    console.error("Error updating claim:", error);
+    res.status(500).json({ Status: "Error", Error: "Server error while updating claim." });
+  }
+});
+
+
+
+*/
+const claimSchema = new mongoose.Schema({
+  fullName: String,
+  hospital: String,
+  policy: String,
+  paymentMethod: String,
+  status: { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending' },
+  userType: { type: String, enum: ['regular', 'premium'], required: true }
+});
+
+// Create claim model
+const Claim = mongoose.model('Claim', claimSchema);
+
+app.post('/claims', async (req, res) => {
+  try {
+    const { fullName, email, hospital, policy, paymentMethod, description } = req.body;
+
+    const newClaim = new Claim({
+      fullName,
+      email,
+      hospital,
+      policy,
+      paymentMethod,
+      description,
+      status: 'Pending',  // Default status
+      userType: 'regular', // This is to differentiate between premium and regular users
+      priority: false,  // Regular users don't have priority by default
+    });
+
+    await newClaim.save();
+    res.status(201).json({ message: 'Claim submitted successfully' });
+  } catch (err) {
+    console.error('Error submitting regular claim:', err);
+    res.status(500).json({ message: 'Failed to submit the claim request. Please try again.' });
+  }
+});
+
+
+app.post('/premiumclaims', async (req, res) => {
+  try {
+    const { fullName, email, hospital, policy, paymentMethod, description, priority } = req.body;
+    const newClaim = new Claim({
+      fullName,
+      email,
+      hospital,
+      policy,
+      paymentMethod,
+      description,
+      status: 'Pending',
+      userType: 'premium',
+      priority,
+    });
+
+    await newClaim.save();
+    res.status(201).json({ message: 'Claim submitted successfully' });
+  } catch (err) {
+    console.error('Error submitting premium claim:', err);
+    res.status(500).json({ message: 'Failed to submit the claim request. Please try again.' });
+  }
+});
+
+app.get('/claims', async (req, res) => {
+  try {
+    const regularClaims = await Claim.find({ userType: 'regular' });
+    res.json(regularClaims);
+  } catch (err) {
+    console.error('Error fetching regular claims:', err);
+    res.status(500).json({ message: 'Failed to fetch regular claims' });
+  }
+});
+
+// Route to get premium claims
+app.get('/premiumclaims', async (req, res) => {
+  try {
+    const premiumClaims = await Claim.find({ userType: 'premium' });
+    res.json(premiumClaims);
+  } catch (err) {
+    console.error('Error fetching premium claims:', err);
+    res.status(500).json({ message: 'Failed to fetch premium claims' });
+  }
+});
+
+// Route to update claim status
+app.put('/claims/:id', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const claim = await Claim.findById(id);
+
+    if (!claim) {
+      return res.status(404).json({ message: 'Claim not found' });
+    }
+
+    // Ensure only Pending claims can be updated
+    if (claim.status === 'Pending') {
+      claim.status = status;
+      await claim.save();
+      res.json({ message: `Claim ${status.toLowerCase()}d successfully!` });
+    } else {
+      res.status(400).json({ message: 'Claim status cannot be changed' });
+    }
+  } catch (err) {
+    console.error('Error updating claim:', err);
+    res.status(500).json({ message: 'Failed to update claim' });
   }
 });
 
@@ -226,6 +422,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ Status: "Error", Error: "Server error during login" });
   }
 });
+
 app.get('/profile', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password'); // Exclude password field
@@ -250,48 +447,43 @@ app.get('/profile', verifyToken, async (req, res) => {
     res.status(500).json({ Status: "Error", Error: "Server error fetching profile" });
   }
 });
+
+
+// Updated Backend Code
+
+// Consolidated route to fetch all users (regular and premium)
 app.get('/users', async (req, res) => {
   try {
-    const users = await User.find().select('-password'); // Exclude password field
+    const users = await User.find().select('-password');
     res.status(200).json(users);
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error fetching users" });
+    res.status(500).json({ message: "Error fetching users" });
   }
 });
 
+app.get('/premiumusers', async (req, res) => {
+  try {
+    const premiumUsers = await PremiumUser.find().select('-password');
+    res.status(200).json(premiumUsers);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching premium users" });
+  }
+});
+
+// Consolidated route to delete a user
 app.delete('/users/:id', verifyToken, async (req, res) => {
   try {
-    const userId = req.params.id;
-    const user = await User.findByIdAndDelete(userId); // Delete user by ID
+    const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
-      return res.status(404).json({ Status: "Error", Error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ Status: "Success", Message: "User deleted successfully" });
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error deleting user" });
+    res.status(500).json({ message: "Error deleting user" });
   }
 });
 
-app.put('/users/:id', verifyToken, async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const { claims, paymentMethod, status } = req.body; // Add other fields as necessary
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { claims, paymentMethod, status }, // Update user fields
-      { new: true } // Return the updated document
-    );
-    if (!updatedUser) {
-      return res.status(404).json({ Status: "Error", Error: "User not found" });
-    }
-    res.status(200).json({ Status: "Success", Message: "User updated successfully", User: updatedUser });
-  } catch (error) {
-    console.error("Error updating user:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error updating user" });
-  }
-});
+
 app.get('/premium', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -324,20 +516,6 @@ app.put('/users/upgrade', verifyToken, async (req, res) => {
 });
 
 
-// Claim Schema
-const claimSchema = new mongoose.Schema({
-  fullName: { type: String, required: true },
-  email: { type: String, required: true },
-  hospital: { type: String, required: true },
-  policy: { type: String, required: true },
-  paymentMethod: { type: String, required: true },
-  description: { type: String, required: true },
-  status: { type: String, default: "Pending" },
-});
-
-
-const Claim = mongoose.model("Claim", claimSchema);
-
 app.post("/claim-request", verifyToken, async (req, res) => {
   try {
     const userId = req.userId; // Extracted from the token
@@ -358,86 +536,6 @@ app.post("/claim-request", verifyToken, async (req, res) => {
     res.status(500).json({ Status: "Error", Error: "Server error while processing claim request." });
   }
 });
-
-
-// Endpoint to fetch claims (Admin View)
-app.get("/claims", async (req, res) => {
-  try {
-    const claims = await Claim.find();
-    res.status(200).json(claims);
-  } catch (error) {
-    console.error("Error fetching claims:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error while fetching claims." });
-  }
-});
-
-// Fetch Claims with Hospital, Policy, and PaymentMethod
-app.get("/claims", async (req, res) => {
-  try {
-    const claims = await Claim.find(); // Retrieve all claims
-    res.status(200).json({ Status: "Success", Claims: claims });
-  } catch (error) {
-    console.error("Error fetching claims:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error while fetching claims." });
-  }
-});
-
-// Update Claim Status and Propagate to User's Profile
-app.put("/claims/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body; // New status: "approved" or "rejected"
-
-    const updatedClaim = await Claim.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true } // Return the updated claim
-    );
-
-    if (!updatedClaim) {
-      return res.status(404).json({ Status: "Error", Error: "Claim not found" });
-    }
-
-    // Update claim in the user's profile
-    const user = await User.findOne({ email: updatedClaim.email }); // Match by claim's email
-    if (user) {
-      const userClaims = user.claims || []; // Ensure claims array exists
-      const claimIndex = userClaims.findIndex((c) => c._id.toString() === id);
-      if (claimIndex !== -1) {
-        userClaims[claimIndex].status = status; // Update the status in the user's claims
-      } else {
-        userClaims.push({
-          service: updatedClaim.policy, // Example mapping: use "policy" as the service name
-          status,
-        });
-      }
-      user.claims = userClaims;
-      await user.save();
-    }
-
-    res.status(200).json({ Status: "Success", Message: "Claim updated successfully", Claim: updatedClaim });
-  } catch (error) {
-    console.error("Error updating claim:", error);
-    res.status(500).json({ Status: "Error", Error: "Server error while updating claim." });
-  }
-});
-app.post("/claims", async (req, res) => {
-  const { fullName, email, hospital, policy, paymentMethod, description } = req.body;
-
-  if (!fullName || !email || !hospital || !policy || !paymentMethod || !description) {
-    return res.status(400).json({ Status: "Error", Error: "All fields are required." });
-  }
-
-  try {
-    const newClaim = new Claim({ fullName, email, hospital, policy, paymentMethod, description });
-    await newClaim.save();
-    res.status(201).json({ Status: "Success", Message: "Claim submitted successfully." });
-  } catch (error) {
-    console.error("Error saving claim:", error.message);
-    res.status(500).json({ Status: "Error", Error: "Failed to save the claim." });
-  }
-});
-
 
 
 // Start the Server

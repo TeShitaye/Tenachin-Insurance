@@ -120,12 +120,13 @@ const Profile = () => {
           <div className="bg-white shadow rounded-lg p-4">
             <h2 className="text-xl font-bold text-gray-800">User Information</h2>
             <div className="text-gray-600 mt-4 space-y-2">
+            <p><strong>Full Name:</strong> {user?.username}</p>
               <p><strong>Email:</strong> {user?.email}</p>
               <p><strong>Phone:</strong> {user?.phone}</p>
-              <p><strong>Region:</strong> {user?.region || "N/A"}</p>
+             { /* <p><strong>Region:</strong> {user?.region || "N/A"}</p>
               <p><strong>Zone:</strong> {user?.zone || "N/A"}</p>
               <p><strong>Woreda:</strong> {user?.woreda || "N/A"}</p>
-              <p><strong>Kebele:</strong> {user?.kebele || "N/A"}</p>
+              <p><strong>Kebele:</strong> {user?.kebele || "N/A"}</p> */}
             </div>
           </div>
 
