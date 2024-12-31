@@ -16,7 +16,7 @@ const Footer = () => {
         {/* Brand and Description */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="flex flex-col items-start">
-            <h1 className="text-3xl font-semibold text-white mb-1">Tenachin</h1>
+            <h1 className="text-3xl font-semibold text-white mb-1">Magen</h1>
             <p className="text-white text-lg font-light mb-4">
               Simplifying your health insurance documentation, one step at a time.
             </p>
@@ -133,7 +133,7 @@ const Footer = () => {
 
       {/* Footer Bottom */}
       <div className="mt-8 border-t border-blue-600 pt-4 text-center text-sm text-gray-200">
-        <p>© {new Date().getFullYear()} Tenachin. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Magen. All rights reserved.</p>
       </div>
     </footer>
   );

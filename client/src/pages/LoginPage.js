@@ -8,7 +8,7 @@ function LoginPage() {
     email: "",
     password: "",
   });
-
+  const [error, setError] = useState(""); // State for error messages
   const navigate = useNavigate();
 
   function login(event) {
@@ -17,43 +17,53 @@ function LoginPage() {
   
     axios.post("http://localhost:5000/login", values)
       .then((res) => {
+        console.log("Response from server:", res.data); // Log the response
         if (res.data.Status === "Success") {
-          // Save the token in local storage
           localStorage.setItem("token", res.data.Token);
-          // Navigate to the profile page
           navigate("/profile");
         } else {
-          alert(res.data.Error);
+          setError(res.data.Error || "Login failed. Please try again.");
         }
       })
-      .catch((err) => console.error(err));
-  }
-  
+      .catch((err) => {
+        console.error("Error during login:", err.response ? err.response.data : err.message);
+        setError("Login failed. Please try again.");
+      }); }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-t from-gray-800 to-gray-350"
-    style={{
-      backgroundImage: `url(${backImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      minHeight: "100vh",
-    }}>
+         style={{
+           backgroundImage: `url(${backImage})`,
+           backgroundSize: "cover",
+           backgroundPosition: "center",
+           minHeight: "100vh",
+         }}>
       <div className="w-full max-w-md p-8 bg-gray-100 rounded-lg shadow-lg">
         <form className="space-y-6" onSubmit={login}>
           <h1 className="text-2xl font-bold text-blue-600 text-center mb-4">Login</h1>
+
+          {error && (
+            <div className="text-red-500 text-center mb-4">
+              {error} {/* Display error messages */}
+            </div>
+          )}
 
           <div className="space-y-4">
             <input
               type="email"
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              value={values.email} // Bind input value
               onChange={(e) => setValues({ ...values, email: e.target.value })}
+              required
             />
             <input
               type="password"
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              value={values.password} // Bind input value
               onChange={(e) => setValues({ ...values, password: e.target.value })}
+              required
             />
           </div>
 

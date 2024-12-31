@@ -10,17 +10,27 @@ const ClaimsManagement = () => {
   useEffect(() => {
     const fetchClaims = async () => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("Token missing");
+
         const [regularResponse, premiumResponse] = await Promise.all([
-          axios.get("http://localhost:5000/claims"),
-          axios.get("http://localhost:5000/premiumclaims"),
+          axios.get("http://localhost:5000/claims", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get("http://localhost:5000/premiumclaims", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
         ]);
 
+        console.log("Regular Claims:", regularResponse.data);
+        console.log("Premium Claims:", premiumResponse.data);
         setRegularClaims(regularResponse.data);
         setPremiumClaims(premiumResponse.data);
-      } catch (err) {
-        setError("Failed to fetch claims. Please try again later.");
-      } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after data is fetched
+      } catch (error) {
+        console.error("Error fetching claims:", error);
+        setError(error.response ? error.response.data.message : "Failed to fetch claims.");
+        setLoading(false); // Ensure loading is false even if there is an error
       }
     };
 
@@ -30,92 +40,72 @@ const ClaimsManagement = () => {
   const handleAction = async (claimId, action, isPremium) => {
     try {
       await axios.put(`http://localhost:5000/claims/${claimId}`, { status: action });
-
+      // Update state locally after the action
       if (isPremium) {
         setPremiumClaims((prev) =>
-          prev.map((claim) =>
-            claim._id === claimId ? { ...claim, status: action } : claim
-          )
+          prev.map((claim) => (claim._id === claimId ? { ...claim, status: action } : claim))
         );
       } else {
         setRegularClaims((prev) =>
-          prev.map((claim) =>
-            claim._id === claimId ? { ...claim, status: action } : claim
-          )
+          prev.map((claim) => (claim._id === claimId ? { ...claim, status: action } : claim))
         );
       }
-
       alert(`Claim ${action.toLowerCase()}d successfully!`);
     } catch (err) {
-      console.error(`Failed to ${action.toLowerCase()} claim:`, err);
+      console.error("Error updating claim:", err);
+      setError(err.response ? err.response.data.message : "Failed to update claim. Please try again.");
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-screen text-lg text-gray-600">
         Loading...
       </div>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className="flex justify-center items-center h-screen text-lg text-red-600">
         {error}
       </div>
     );
+  }
 
   const renderTable = (claims, title, isPremium) => (
     <div className="m-4">
-      <h2 className="text-2xl font-bold text-white py-4">{title}</h2>
-      <table className="min-w-full border bg-white">
+      <h2 className="text-2xl font-bold">{title}</h2>
+      <table className="min-w-full border-collapse border border-gray-200">
         <thead>
           <tr>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">Claim ID</th>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">User</th>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">Hospital</th>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">Policy</th>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">Payment Method</th>
-            <th className="border px-2 py-2 text-blue-600 border-blue-700 bg-gray-100">Status</th>
-            <th className="border px-4 py-2 text-blue-600 border-blue-700 bg-gray-100">Actions</th>
+            <th className="border border-gray-300 px-4 py-2">Hospital</th>
+            <th className="border border-gray-300 px-4 py-2">Service</th>
+            <th className="border border-gray-300 px-4 py-2">Payment Method</th>
+            <th className="border border-gray-300 px-4 py-2">Status</th>
+            <th className="border border-gray-300 px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {claims.map((claim) => (
-            <tr key={claim._id} className="hover:bg-gray-50">
-              <td className="border border-black px-2 py-2 text-center">{claim._id}</td>
-              <td className="border border-black px-2 py-2 text-center">{claim.fullName}</td>
-              <td className="border border-black px-2 py-2 text-center">{claim.hospital}</td>
-              <td className="border border-black px-2 py-2 text-center">{claim.policy}</td>
-              <td className="border border-black px-1 py-2 text-center">{claim.paymentMethod}</td>
-              <td
-                className={`border border-black px-2 py-2 text-center font-medium ${
-                  claim.status === "Approved"
-                    ? "text-green-600"
-                    : claim.status === "Rejected"
-                    ? "text-red-600"
-                    : "text-yellow-600"
-                }`}
-              >
-                {claim.status}
-              </td>
-              <td className="border border-black py-2 text-center">
-                {claim.status === "Pending" && (
-                  <div className="flex gap-2 justify-center">
-                    <button
-                      onClick={() => handleAction(claim._id, "Approved", isPremium)}
-                      className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => handleAction(claim._id, "Rejected", isPremium)}
-                      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                    >
-                      Reject
-                    </button>
-                  </div>
-                )}
+            <tr key={claim._id}>
+              <td className="border border-gray-300 px-4 py-2">{claim.hospital}</td>
+              <td className="border border-gray-300 px-4 py-2">{claim.service}</td>
+              <td className="border border-gray-300 px-4 py-2">{claim.paymentMethod}</td>
+              <td className="border border-gray-300 px-4 py-2">{claim.status}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                <button
+                  className="bg-green-500 text-white px-3 py-1 mr-2 rounded"
+                  onClick={() => handleAction(claim._id, "Approved", isPremium)}
+                >
+                  Approve
+                </button>
+                <button
+                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  onClick={() => handleAction(claim._id, "Rejected", isPremium)}
+                >
+                  Reject
+                </button>
               </td>
             </tr>
           ))}
@@ -125,8 +115,7 @@ const ClaimsManagement = () => {
   );
 
   return (
-    <div className="bg-gradient-to-t from-slate-600 to-slate-400 h-full py-8 px-4">
-      <h1 className="text-3xl font-extrabold text-white">Claims Management</h1>
+    <div className="p-4">
       {renderTable(regularClaims, "Regular Claims", false)}
       {renderTable(premiumClaims, "Premium Claims", true)}
     </div>

@@ -1,94 +1,147 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Magem from '../assets/magen3.jpg'
 import backImage from "../assets/admin1.jpg";
-import docMan from '../assets/docMan.png';
-import claim from '../assets/claims.png';
-import emergency from '../assets/emergency-care.jpg';
-import custSuppo from '../assets/customer_support.jpg';
-import telemed from '../assets/telemedicine.jpg';
-import { FaHeartbeat, FaFileAlt, FaAmbulance, FaLaptopMedical, FaRegFileAlt, FaPhoneAlt } from 'react-icons/fa'; // Importing icons for the services
-import headerImg from '../assets/back12.jpg'
-import hosp from '../assets/hospNet.png'
-import preAproval from '../assets/policies.jpg'
-import wellnes from '../assets/chronic.jpg'
-import manage from '../assets/manag.jpeg'
+
+import {
+  //FaHeartbeat,
+  FaFileAlt,
+  FaAmbulance,
+  FaLaptopMedical,
+ // FaRegFileAlt,
+  FaPhoneAlt,
+  FaCrown,
+  FaPlane,
+  FaHospital,
+  FaStethoscope,
+  FaUserMd,
+  FaDiagnoses,
+  FaPills,
+  FaBaby,
+  FaCapsules,
+  FaUserShield,
+} from "react-icons/fa"; // Added more icons
+
+
 export const Services = () => {
   const services = [
+    // Regular Services
     {
       id: "network-access",
       title: "Hospital Network Access",
-      description: "Access a wide network of trusted hospitals and healthcare providers.",
-      link: "/hospital-network",
-      icon: <FaHeartbeat className="text-4xl text-green-500" />,
-      Image: hosp,
+      description: "Access trusted hospitals within your network.",
+      link: "/services/hospital-network",
+      icon: <FaHospital className="text-4xl text-green-500" />,
+      isPremium: false,
     },
     {
       id: "claims-management",
       title: "Claims Management",
-      description: "Easily file and track claims for medical expenses and treatments.",
-      link: "/claims-management",
+      description: "File and track your insurance claims seamlessly.",
+      link: "/services/claims-management",
       icon: <FaFileAlt className="text-4xl text-blue-500" />,
-      Image: claim
-    },
-    {
-      id: "pre-authorization",
-      title: "Pre-Authorization Support",
-      description: "Get pre-approval for treatments and procedures without hassle.",
-      link: "/pre-authorization",
-      icon: <FaRegFileAlt className="text-4xl text-orange-500" />,
-      Image: preAproval,
-    },
-    {
-      id: "document-management",
-      title: "Document Management",
-      description: "Securely share and manage your insurance and hospital documents.",
-      link: "/document-management",
-      icon: <FaFileAlt className="text-4xl text-purple-600" />,
-      Image: docMan
+      isPremium: false,
     },
     {
       id: "emergency-assistance",
       title: "Emergency Assistance",
-      description: "Round-the-clock support for medical emergencies.",
-      link: "/emergency-assistance",
+      description: "24/7 emergency support for medical needs.",
+      link: "/services/emergency-assistance",
       icon: <FaAmbulance className="text-4xl text-red-600" />,
-      Image: emergency
+      isPremium: false,
     },
     {
-      id: "wellness-benefits",
-      title: "Wellness Benefits",
-      description: "Stay healthy with wellness programs and preventive care discounts.",
-      link: "/wellness-benefits",
-      icon: <FaHeartbeat className="text-4xl text-green-400" />,
-      Image: wellnes
+      id: "routine-checkups",
+      title: "Routine Checkups",
+      description: "Standard checkups to monitor your health.",
+      link: "/services/routine-checkups",
+      icon: <FaStethoscope className="text-4xl text-gray-600" />,
+      isPremium: false,
     },
     {
-      id: "telemedicine-services",
-      title: "Telemedicine Services",
-      description: "Connect with doctors online from the comfort of your home.",
-      link: "/telemedicine",
-      icon: <FaLaptopMedical className="text-4xl text-teal-500" />,
-      Image: telemed
+      id: "medication-support",
+      title: "Prescribed Medications",
+      description: "Coverage for basic prescribed medicines.",
+      link: "/services/medication-support",
+      icon: <FaPills className="text-4xl text-purple-600" />,
+      isPremium: false,
+    },
+    {
+      id: "minor-surgeries",
+      title: "Minor Surgeries",
+      description: "Coverage for minor hospital procedures.",
+      link: "/services/minor-surgeries",
+      icon: <FaUserMd className="text-4xl text-yellow-600" />,
+      isPremium: false,
+    },
+    {
+      id: "maternity-care",
+      title: "Maternity Care",
+      description: "Basic maternity and postnatal services.",
+      link: "/services/maternity-care",
+      icon: <FaBaby className="text-4xl text-pink-500" />,
+      isPremium: false,
     },
     {
       id: "customer-support",
       title: "Customer Support",
-      description: "24/7 assistance for all your insurance and healthcare queries.",
-      link: "/customer-support",
+      description: "24/7 assistance for insurance and queries.",
+      link: "/services/customer-support",
       icon: <FaPhoneAlt className="text-4xl text-yellow-500" />,
-      Image: custSuppo
+      isPremium: false,
+    },
+
+    // Premium Services
+    {
+      id: "international-treatment",
+      title: "International Treatment",
+      description: "Get coverage for treatments abroad.",
+      link: "/services/international-treatment",
+      icon: <FaPlane className="text-4xl text-blue-700" />,
+      isPremium: true,
     },
     {
-      id: "policy-management",
-      title: "Policy Management Tools",
-      description: "Easily renew, upgrade, or modify your insurance policy online.",
-      link: "/policy-management",
-      icon: <FaFileAlt className="text-4xl text-indigo-500" />,
-      Image: manage
+      id: "private-rooms",
+      title: "Private Room Access",
+      description: "Private room coverage during hospitalization.",
+      link: "/services/private-rooms",
+      icon: <FaUserShield className="text-4xl text-gray-700" />,
+      isPremium: true,
+    },
+    {
+      id: "advanced-diagnostics",
+      title: "Advanced Diagnostics",
+      description: "Access MRI, PET scans, and more.",
+      link: "/services/advanced-diagnostics",
+      icon: <FaDiagnoses className="text-4xl text-teal-500" />,
+      isPremium: true,
+    },
+    {
+      id: "air-ambulance",
+      title: "Air Ambulance Service",
+      description: "Emergency air transport for critical cases.",
+      link: "/services/air-ambulance",
+      icon: <FaAmbulance className="text-4xl text-red-700" />,
+      isPremium: true,
+    },
+    {
+      id: "preventive-healthcare",
+      title: "Preventive Healthcare",
+      description: "Vaccines, health programs, and checkups.",
+      link: "/services/preventive-healthcare",
+      icon: <FaCapsules className="text-4xl text-green-600" />,
+      isPremium: true,
+    },
+    {
+      id: "telemedicine",
+      title: "Telemedicine Services",
+      description: "Unlimited virtual doctor consultations.",
+      link: "/services/telemedicine",
+      icon: <FaLaptopMedical className="text-4xl text-teal-700" />,
+      isPremium: true,
     },
   ];
-
 
   return (
     <div
@@ -100,45 +153,50 @@ export const Services = () => {
         minHeight: "200vh",
       }}
     >
-      <img src={headerImg} alt="" className="top-0 w-full h-64 brightness-100" />
-      <div className="relative z-10 px-6 py-20">
-        <h1 className="text-5xl font-extrabold text-center mb-8 animate__animated animate__fadeIn animate__delay-1s">
-          Our Services
-        </h1>
-        <p className="text-lg text-center mb-12 animate__animated animate__fadeIn animate__delay-2s">
+      {/* Header Image */}
+      <img src={Magem} alt="Header" className="top-0 w-full h-80 brightness-100" />
+      <div className="bg-transparent relative z-10 px-6 py-20">
+        {/* Page Heading */}
+        <h1 className="text-5xl font-extrabold text-center mb-8">Our Services</h1>
+        <p className="text-lg text-center mb-12">
           Explore the services we provide to connect you with quality healthcare.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
           {services.map((service) => (
-            <motion.div
-              key={service.id}
-              className="bg-white text-black shadow-lg p-6 border rounded-3xl h-96 relative overflow-hidden"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5 }}
-              whileHover={{
-                scale: 0.92, // Increased scale to 1.25 for 25% growth
-                boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.3)", // Increased shadow effect for hover
-                zIndex: 10, // Bring the hovered card to the top of others
-              }}
-            >
-              {/* Icon */}
-              <div className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-lg">
-                {service.icon}
-              </div>
-              {/* Image */}
-              {service.Image && (
-                <img src={service.Image} alt={service.title} className="w-full h-40 mx-auto rounded-2xl object-cover mb-4" />
-              )}
-              <h2 className="text-xl font-bold text-center mb-2">{service.title}</h2>
-              <p className="text-center text-gray-700 mb-2">{service.description}</p>
-              <Link to={service.link}>
-                <button className="font-medium text-lg w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl hover:opacity-80 transition-all duration-300">
-                  Learn More
-                </button>
-              </Link>
-            </motion.div>
+            <Link to={service.link} key={service.id} className="no-underline block">
+              <motion.div
+                className="bg-white text-black shadow-lg p-6 border rounded-3xl h-64 relative overflow-hidden cursor-pointer hover:shadow-2xl transition-all"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{
+                  scale: 0.95,
+                  boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.3)",
+                  zIndex: 10,
+                }}
+              >
+                {/* Premium Badge */}
+                {service.isPremium && (
+                  <div className="absolute top-2 right-2 bg-yellow-400 text-white px-2 py-1 rounded-full flex items-center gap-1 text-sm font-semibold shadow-md">
+                    <FaCrown className="text-yellow-800" /> Premium
+                  </div>
+                )}
+
+                {/* Service Icon */}
+                <div className="flex justify-center mb-4">
+                  <div className="p-4 bg-gray-100 rounded-full shadow-lg">
+                    {service.icon}
+                  </div>
+                </div>
+
+                {/* Service Content */}
+                <h2 className="text-xl font-bold text-center mb-2">{service.title}</h2>
+                <p className="text-center text-gray-700 mb-4">{service.description}</p>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>

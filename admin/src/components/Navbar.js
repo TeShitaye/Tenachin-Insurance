@@ -41,6 +41,16 @@ const Navbar = () => {
               Users
             </NavLink>
             <NavLink
+              to="/admin/option"
+              className={({ isActive }) =>
+                `hover:text-yellow-300 transition duration-300 ${
+                  isActive ? "text-yellow-300 underline" : ""
+                }no-underline font-bold text-lg px-4`
+              }
+            >
+              Option Management
+            </NavLink>
+            <NavLink
               to="/admin/claims"
               className={({ isActive }) =>
                 `hover:text-yellow-300 transition duration-300 ${
@@ -50,6 +60,7 @@ const Navbar = () => {
             >
               Claims
             </NavLink>
+            
             <NavLink
               to="/admin/reports"
               className={({ isActive }) =>

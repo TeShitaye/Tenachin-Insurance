@@ -13,6 +13,7 @@ import Reports from "./pages/Report";
 import Settings from "./pages/Setting";
 import AdminLogin from "./pages/AdminLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OptionsManagement from "./pages/OptionManagement";
 
 const App = () => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
@@ -51,6 +52,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <ClaimsManagement />
+                  </ProtectedRoute>
+                }
+              />
+                      <Route
+                path="/admin/option"
+                element={
+                  <ProtectedRoute>
+                    <OptionsManagement />
                   </ProtectedRoute>
                 }
               />

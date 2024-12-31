@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from '../assets/main_logo.png'
+import Logo from '../assets/Logo1234.png'
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -36,12 +36,12 @@ const Navbar = () => {
     >
       <div className="flex container mx-auto px-4 sm:px-6 lg:px-8 justify-between items-center h-16">
         {/* Logo */}
-        <div className="flex-wrap">
+        <div className="flex-wrap ">
           <Link to="/">
             <img
               src={Logo}
               alt="Logo"
-              className="w-18 h-18 md:w-40 md:h-40 object-contain transition-transform duration-200 hover:scale-105"
+              className=" hover:bg-white w-12 h-4 md:w-40 md:h-16 transition-transform duration-200 "
             />
           </Link>
         </div>
@@ -50,9 +50,7 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-6">
           {[ 
             { name: "Home", path: "/" },
-            { name: "Profile", path: "/profile" },
-            { name: "Policies", path: "/policies" },
-            { name: "Claims", path: "/claims" },
+            { /* name: "Claims", path: "/claims" */},
             { name: "About Us", path: "/about" },
             { name: "Services", path: "/services" },
           ].map((link) => (
@@ -72,11 +70,15 @@ const Navbar = () => {
 
         {/* Login Button */}
         <div className="hidden md:block">
-          <Link
-            to="/login"
-            className="no-underline px-6 py-2 bg-white text-blue-400 hover:bg-blue-400 hover:text-white text-lg font-semibold rounded-3xl transition-all shadow-lg duration-300"
-          >
+          <Link to="/login">
+              <button
+              type="submit"
+              className="mt-0 mx-20 w-1/2 px-2 py-1 text-lg text-blue-400 bg-white rounded-3xl font-bold
+              hover:bg-blue-400 hover:text-pink-600 hover:scale-125 transition duration-200 ease-in-out 
+              active:bg-white-100 active:text-blue-800 active:scale-95"
+            >
             Login
+            </button>
           </Link>
         </div>
 
@@ -109,8 +111,6 @@ const Navbar = () => {
         <div className="md:hidden flex flex-col items-center mt-4 space-y-4 bg-gray-800 text-white p-4">
           {[ 
             { name: "Home", path: "/" },
-            { name: "Profile", path: "/profile" },
-            { name: "Policies", path: "/policies" },
             { name: "Claims", path: "/claims" },
             { name: "About Us", path: "/about" },
             { name: "Services", path: "/services" },

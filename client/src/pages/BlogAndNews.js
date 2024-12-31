@@ -67,7 +67,7 @@ const BlogAndNews = () => {
                 <h3 className="text-xl font-semibold text-blue-800 mb-2">
                   {article.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{article.description}</p>
+                <p className="text-gray-900 mb-4">{article.description}</p>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">{article.date}</span>
                   <a

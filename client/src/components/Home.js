@@ -7,7 +7,7 @@ import TestimonialsAndCaseStudies from '../pages/TestimonialPage'
 import AboutUsSummary from '../pages/AboutusSummery'
 import ServiceSummary from './ServiceSumery'
 import MetricsSection from './MetricSection'
-import backgroundImage from '../assets/option30.jpg'
+import backgroundImage from '../assets/admin1.jpg'
 
 const Home = () => {
   return (

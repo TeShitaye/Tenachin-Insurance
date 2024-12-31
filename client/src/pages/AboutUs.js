@@ -1,7 +1,7 @@
 import React from "react";
 // import backgroundImage from "../assets/dashboard.jpg"; // Background image
 import teamImage from "../assets/background3.jpg"; // Team image
-import topImg from '../assets/back12.jpg'
+import topImg from '../assets/magen3.jpg'
 import back3 from '../assets/admin1.jpg'
 
 const AboutUs = () => {
@@ -16,7 +16,7 @@ const AboutUs = () => {
         minHeight: "200vh",
       }}
     >
-      <img src={topImg} alt="" className="w-full h-64 brightness-100"/>
+      <img src={topImg} alt="" className="w-full h-80 brightness-100"/>
          
       {/* Main content container with gradient background overlay */}
       <div className="min-h-screen py-12 px-4 sm:px-10 w-full">
@@ -30,8 +30,8 @@ const AboutUs = () => {
           <div className="max-w-4xl mx-auto ">
             <div className="bg-transparent shadow-2xl rounded-w-full px-32 py-8">
             <p className="text-lg text-white leading-relaxed mb-8 ">
-            <strong>Welcome to Tenachin Health Insurance</strong> <br/>
-At Tenachin Health Insurance, we are committed to empowering individuals and families
+            <strong>Welcome to Magen Health Insurance</strong> <br/>
+At Magen Health Insurance, we are committed to empowering individuals and families
  by ensuring access to quality healthcare without the financial burden. Our service provides comprehensive coverage of hospital service fees, 
 helping our users focus on their health and recovery without worrying about the cost.
 With a user-friendly platform and partnerships with leading hospitals, 
@@ -39,7 +39,7 @@ Tenachin Health Insurance strives to simplify health insurance while delivering 
  we are here to support you every step of the way.
             </p>
             <p className="text-lg text-white leading-relaxed mb-8">
-            < strong>Why Choose Tenachin Health Insurance?</strong> <br/>
+            < strong>Why Choose Magen Health Insurance?</strong> <br/>
             <ul class="list-disc">
             <li>Transparent and reliable health insurance plans.</li>
             <li>Broad network of partnered hospitals across the country.</li>
@@ -52,7 +52,7 @@ Tenachin Health Insurance strives to simplify health insurance while delivering 
               Our Mission
             </h2>
             <p className="text-lg text-white leading-relaxed mb-8">
-            < strong>Why Choose Tenachin Health Insurance?</strong> <br/>
+            < strong>Why Choose Magen Health Insurance?</strong> <br/>
             <ul class="list-disc">
             <li>Offering innovative solutions to reduce the financial barriers to healthcare.</li>
             <li>Building strong relationships with hospitals to ensure seamless service delivery.</li>

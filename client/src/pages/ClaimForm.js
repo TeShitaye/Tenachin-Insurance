@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ClaimRequestForm = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
     hospital: "",
-    policy: "",
+    service: "",
     paymentMethod: "",
     description: "",
   });
 
-  const hospitals = ["City Hospital", "HealthCare Plus", "Sunrise Medical", "St. Mary's"];
-  const policies = ["Emergency Care", "Doctor Appointments", "Surgical Procedures", "Inpatient Services"];
-  const paymentMethods = ["Credit Card", "Debit Card", "Bank Transfer", "Cash"];
+  const [options, setOptions] = useState({
+    hospitals: [],
+    services: [],
+    paymentMethods: [],
+  });
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/options");
+        setOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching options:", error.response?.data || error.message);
+      }
+    };
+    fetchOptions();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,15 +34,24 @@ const ClaimRequestForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const token = localStorage.getItem("token"); // Assuming you store the JWT in local storage
+  
+    if (!token) {
+      alert("User not authenticated.");
+      return;
+    }
   
     try {
-      await axios.post("http://localhost:5000/claims", formData);
-      alert("Claim submitted successfully.");
+      const response = await axios.post("http://localhost:5000/claims", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      alert(response.data.Status + ": " + response.data.Message);
       setFormData({
-        fullName: "",
-        email: "",
         hospital: "",
-        policy: "",
+        service: "",
         paymentMethod: "",
         description: "",
       });
@@ -46,35 +67,6 @@ const ClaimRequestForm = () => {
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-6">Claim Request Form</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Full Name */}
-          <div>
-            <label className="block text-lg font-semibold text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-lg font-semibold text-gray-700">Email Address</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email address"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
-
-          {/* Hospital Selection */}
           <div>
             <label className="block text-lg font-semibold text-gray-700">Select Hospital</label>
             <select
@@ -87,36 +79,34 @@ const ClaimRequestForm = () => {
               <option value="" disabled>
                 Select a hospital
               </option>
-              {hospitals.map((hospital, index) => (
-                <option key={index} value={hospital}>
-                  {hospital}
+              {options.hospitals.map((hospital) => (
+                <option key={hospital.id} value={hospital.name}>
+                  {hospital.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Policy Selection */}
           <div>
-            <label className="block text-lg font-semibold text-gray-700">Select Policy</label>
+            <label className="block text-lg font-semibold text-gray-700">Select Services</label>
             <select
-              name="policy"
-              value={formData.policy}
+              name="service"
+              value={formData.service}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
               required
             >
               <option value="" disabled>
-                Select a policy
+                Select a service
               </option>
-              {policies.map((policy, index) => (
-                <option key={index} value={policy}>
-                  {policy}
+              {options.services.map((service) => (
+                <option key={service.id} value={service.name}>
+                  {service.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Payment Method */}
           <div>
             <label className="block text-lg font-semibold text-gray-700">Payment Method</label>
             <select
@@ -129,15 +119,14 @@ const ClaimRequestForm = () => {
               <option value="" disabled>
                 Select a payment method
               </option>
-              {paymentMethods.map((method, index) => (
-                <option key={index} value={method}>
-                  {method}
+              {options.paymentMethods.map((method) => (
+                <option key={method.id} value={method.name}>
+                  {method.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-lg font-semibold text-gray-700">Additional Details</label>
             <textarea
@@ -150,7 +139,6 @@ const ClaimRequestForm = () => {
             ></textarea>
           </div>
 
-          {/* Submit Button */}
           <div className="text-center">
             <button
               type="submit"

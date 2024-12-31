@@ -76,7 +76,9 @@ const ServiceSummary = () => {
       </div>
       <div className="mt-8 text-center">
         <Link to="/services">
-          <button className="no-underline px-8 py-3 bg-blue-400 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-pink-700 hover:text-blue-400 hover: transition-all duration-300">
+          <button className="no-underline px-4 py-3 bg-blue-400 text-white text-lg font-semibold 
+          rounded-lg shadow-lg hover:scale-110 ease-in-out
+           hover:bg-pink-700 hover:text-blue-400 hover: transition-all duration-300">
             View All Services
           </button>
         </Link>

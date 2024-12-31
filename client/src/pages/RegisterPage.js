@@ -28,7 +28,7 @@ function RegisterPage() {
         axios.post("http://localhost:5000/register", values)
             .then(res => {
                 console.log("Registered successfully:", res.data);
-                navigate("/home"); // Navigate to the home page after successful registration
+                navigate("/login"); // Navigate to the home page after successful registration
             }).catch(err => console.error(err));
     }
 

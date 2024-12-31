@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from "../assets/Amarach333.jpg";
+import backgroundImage from "../assets/major.jpeg";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: "170vh",
+        height: "155vh",
         width: "100%",
       }}
     >
@@ -54,8 +54,8 @@ const Dashboard = () => {
             <Link to="/premium-login">
               <button
                 type="button"
-                className="w-full px-2 py-2 text-lg text-white bg-blue-500 rounded-3xl font-semibold
-                    hover:bg-blue-600 transition duration-200 ease-in-out"
+                className="center w-3/4 px-2 py-2 mx-4 text-md text-white bg-blue-500 rounded-3xl font-semibold
+                    hover:bg-blue-600 transition duration-200 ease-in-out hover:scale-125 "
               >
                 Login as Premium
               </button>
@@ -64,8 +64,8 @@ const Dashboard = () => {
               <Link to="/premium-register">
                 <button
                   type="button"
-                  className="w-full px-2 py-2 text-lg text-white bg-green-500 rounded-3xl font-bold
-                      hover:bg-green-600 transition duration-200 ease-in-out"
+                  className="w-4/5 px-2 py-2 text-md text-white bg-green-500 rounded-3xl font-bold
+                      hover:bg-green-600 transition duration-200 ease-in-out hover:scale-125"
                 >
                   Register for Premium
                 </button>
