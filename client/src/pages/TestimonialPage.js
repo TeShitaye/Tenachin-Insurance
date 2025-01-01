@@ -1,7 +1,6 @@
 import React from "react";
 import emergency from '../assets/emergency.jpg'
 import chronic from '../assets/chronic.jpg'
-//import backgr from '../assets/admin.jpg'
 
 const TestimonialsAndCaseStudies = () => {
   const testimonials = [
@@ -44,20 +43,12 @@ const TestimonialsAndCaseStudies = () => {
   ];
 
   return (
-    <div className=" pt-20 pb-16 text-white  rounded-lg shadow-xl">
-    {/*  style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: "110vh",
-        width: "100%",
-      }} */ }
+    <div className="pt-20 pb-16 text-white rounded-lg shadow-xl">
       <h2 className="text-4xl font-extrabold text-center text-white mb-8">
         What Our Customers Say
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
@@ -72,7 +63,7 @@ const TestimonialsAndCaseStudies = () => {
               {testimonial.name}
             </h3>
             <p className="text-sm text-black mb-4">{testimonial.location}</p>
-            <p className="text-black ">{testimonial.feedback}</p>
+            <p className="text-black">{testimonial.feedback}</p>
           </div>
         ))}
       </div>
@@ -81,7 +72,7 @@ const TestimonialsAndCaseStudies = () => {
         Real-Life Case Studies
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-4 py-6">
         {caseStudies.map((caseStudy, index) => (
           <div
             key={index}
@@ -95,7 +86,7 @@ const TestimonialsAndCaseStudies = () => {
             <h3 className="text-2xl font-bold text-blue-700">
               {caseStudy.title}
             </h3>
-            <p className="text-lg text-black  mt-2">{caseStudy.description}</p>
+            <p className="text-lg text-black mt-2">{caseStudy.description}</p>
           </div>
         ))}
       </div>

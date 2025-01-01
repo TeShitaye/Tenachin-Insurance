@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from '../assets/Logo1234.png'
+import Logo from '../assets/Logo1234.png';
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -8,8 +8,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu toggle
   const location = useLocation();
 
-  // Scroll behavior for hiding/showing navbar
-  const handleScroll = () => {
+  // Memoizing handleScroll to avoid unnecessary re-renders
+  const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     if (currentScrollY > lastScrollY && currentScrollY > 50) {
       setIsVisible(false); // Hide navbar on scroll down
@@ -17,14 +17,14 @@ const Navbar = () => {
       setIsVisible(true); // Show navbar on scroll up
     }
     setLastScrollY(currentScrollY);
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [handleScroll]); // Adding handleScroll as a dependency
 
   const isActive = (path) => location.pathname === path;
 
@@ -36,12 +36,12 @@ const Navbar = () => {
     >
       <div className="flex container mx-auto px-4 sm:px-6 lg:px-8 justify-between items-center h-16">
         {/* Logo */}
-        <div className="flex-wrap ">
+        <div className="flex-wrap">
           <Link to="/">
             <img
               src={Logo}
               alt="Logo"
-              className=" hover:bg-white w-12 h-4 md:w-40 md:h-16 transition-transform duration-200 "
+              className="hover:bg-white w-16 h-8 sm:w-24 sm:h-10 md:w-40 md:h-16 transition-transform duration-200"
             />
           </Link>
         </div>
@@ -50,7 +50,6 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-6">
           {[ 
             { name: "Home", path: "/" },
-            { /* name: "Claims", path: "/claims" */},
             { name: "About Us", path: "/about" },
             { name: "Services", path: "/services" },
           ].map((link) => (
@@ -111,7 +110,6 @@ const Navbar = () => {
         <div className="md:hidden flex flex-col items-center mt-4 space-y-4 bg-gray-800 text-white p-4">
           {[ 
             { name: "Home", path: "/" },
-            { name: "Claims", path: "/claims" },
             { name: "About Us", path: "/about" },
             { name: "Services", path: "/services" },
           ].map((link) => (

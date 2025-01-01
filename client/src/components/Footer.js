@@ -1,139 +1,60 @@
 import React from "react";
-import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa"; // For social icons
-import backgroundImage from '../assets/back13.jpg'
+import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8 px-8 "
-    style={{
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "50vh",
-      width: "100%",
-    }}>
-      <div className="max-w-7xl mx-16 h-44 ">
-        {/* Brand and Description */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="flex flex-col items-start">
-            <h1 className="text-3xl font-semibold text-white mb-1">Magen</h1>
-            <p className="text-white text-lg font-light mb-4">
-              Simplifying your health insurance documentation, one step at a time.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div className="flex flex-col items-start ml-32 w-64">
-            <h4 className="text-2xl font-semibold text-white mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="/register"
-                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300" 
-                >
-                  Profile
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/policies"
-                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  Read Policy
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/claims"
-                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  Claims
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about"
-                  className="no-underline text-gray-300 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  About Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Our Services 
-          <div className="flex flex-col items-start">
-            <h4 className="text-2xl font-semibold text-white mb-4">Our Services</h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="/emergency-care"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  Emergency Care
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/doctor-appointments"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  Doctor Appointments
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/diagnostic-tests"
-                  className="no-underline text-gray-400 hover:text-yellow-500 focus:outline-none transition duration-300"
-                >
-                  Diagnostic Tests and Lab Work
-                </a>
-              </li>
-            </ul>
-          </div>         */}
-
-          {/* Contact Information */}
-          <div className="flex flex-col justify-center ml-32 w-64">
-            <h4 className="text-2xl font-semibold text-white mb-4">Contact Us</h4>
-            <p className="text-gray-300 hover:text-yellow-400 transition duration-300 mb-2">📞 +251-941208343</p>
-            <p className="text-gray-300 hover:text-yellow-400 transition duration-300">📧 support@tenachin.com</p>
-           <ul className="flex gap-6">
-           <a
-            href="https://instagram.com"
-            className="text-3xl text-white transition duration-300 hover:scale-125 ease-out"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaInstagram />
-          </a>
-          <a
-            href="https://twitter.com"
-            className="text-3xl text-white transition duration-300 hover:scale-125 ease-out"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaTwitter />
-          </a>
-          <a
-            href="https://linkedin.com"
-            className="text-3xl text-white  transition duration-300 hover:scale-125 ease-out"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaLinkedin />
-          </a>
-           </ul>
-            
-          </div>
-               {/* Social Media */}
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-8">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-2">Magen</h1>
+          <p className="text-sm">
+            Simplifying your health insurance documentation, one step at a time.
+          </p>
         </div>
-
-   
+        <div>
+          <h4 className="no-underline text-lg font-semibold text-white mb-2">Quick Links</h4>
+          <ul className="space-y-2">
+            <li>
+              <a href="/register" className="hover:text-yellow-500 transition no-underline">
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="/policies" className="hover:text-yellow-500 transition no-underline">
+                Read Policy
+              </a>
+            </li>
+            <li>
+              <a href="/claims" className="hover:text-yellow-500 transition no-underline">
+                Claims
+              </a>
+            </li>
+            <li>
+              <a href="/about" className="hover:text-yellow-500 transition no-underline">
+                About Us
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-semibold text-white mb-2">Contact Us</h4>
+          <p className="text-sm mb-2">📞 +251-941208343</p>
+          <p className="text-sm mb-4">📧 support@tenachin.com</p>
+          <div className="flex space-x-4">
+            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <FaInstagram className="text-2xl hover:text-yellow-500 transition" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noreferrer">
+              <FaTwitter className="text-2xl hover:text-yellow-500 transition" />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+              <FaLinkedin className="text-2xl hover:text-yellow-500 transition" />
+            </a>
+          </div>
+        </div>
       </div>
-
-      {/* Footer Bottom */}
-      <div className="mt-8 border-t border-blue-600 pt-4 text-center text-sm text-gray-200">
-        <p>© {new Date().getFullYear()} Magen. All rights reserved.</p>
+      <div className="text-center text-sm mt-4 border-t border-gray-700 pt-4">
+        © {new Date().getFullYear()} Magen. All rights reserved.
       </div>
     </footer>
   );
