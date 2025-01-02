@@ -66,7 +66,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 connectDB();
+const OptionSchema = new mongoose.Schema({
+  type: String, // e.g., hospitals, services, paymentMethods
+  name: String,
+});
 
+const Options = mongoose.model("Options", OptionSchema);
 
 // Claim Schema
 const claimSchema = new mongoose.Schema({
@@ -244,181 +249,109 @@ app.get('/profile', verifyToken, async (req, res) => {
   }
 });
 
+// POST Claim (Unified for Regular and Premium)
+app.post("/claims", verifyToken, async (req, res) => {
+  const { hospital, service, policy, paymentMethod, description, priority = false } = req.body;
 
-// POST Regular Claim
-app.post('/claims', async (req, res) => {
-  const { hospital, service, paymentMethod } = req.body;
-
-  if (!hospital || !service || !paymentMethod) {
-    return res.status(400).json({ message: 'All fields (hospital, service, payment method) are required' });
+  // Validation
+  if (!hospital || !paymentMethod || (!service && !policy)) {
+    return res.status(400).json({ message: "All required fields must be provided." });
   }
 
   try {
-    const newClaim = new Claim({
+    const claimData = {
+      userId: req.user.id,
       hospital,
-      service,
-      paymentMethod,
-      userType: 'regular',
-    });
-
-    await newClaim.save();
-    res.status(201).json({ message: 'Regular claim submitted successfully!' });
-  } catch (err) {
-    console.error('Error submitting regular claim:', err);
-    res.status(500).json({ message: 'Failed to submit the claim' });
-  }
-});
-
-// POST Premium Claim
-app.post('/premiumclaims', async (req, res) => {
-  const { hospital, policy, paymentMethod, description, priority } = req.body;
-
-  if (!hospital || !policy || !paymentMethod || !description) {
-    return res.status(400).json({ message: 'All fields are required for premium claims' });
-  }
-
-  try {
-    const newClaim = new Claim({
-      hospital,
-      policy,
       paymentMethod,
       description,
-      status: 'Pending',
-      userType: 'premium',
-      priority,
-    });
+      premium: priority,
+      service: service || null,
+      policy: policy || null,
+      status: "Pending", // Default status
+    };
 
+    const newClaim = new Claim(claimData);
     await newClaim.save();
-    res.status(201).json({ message: 'Premium claim submitted successfully' });
+
+    res.status(201).json({ message: "Claim submitted successfully!" });
   } catch (err) {
-    console.error('Error submitting premium claim:', err);
-    res.status(500).json({ message: 'Failed to submit the claim request. Please try again.' });
+    console.error("Error submitting claim:", err);
+    res.status(500).json({ message: "Failed to submit the claim." });
   }
 });
 
-// GET Regular Claims
-app.get('/claims', async (req, res) => {
+// GET Claims for Users (Self-View)
+app.get("/claims", verifyToken, async (req, res) => {
   try {
-    const claims = await Claim.find({ userType: 'regular' });
-    console.log("Fetched Regular Claims:", claims);
+    const claims = await Claim.find({ userId: req.user.id });
     res.status(200).json(claims);
   } catch (err) {
-    console.error("Error fetching regular claims:", err);
-    res.status(500).json({ message: 'Failed to fetch regular claims' });
+    console.error("Error fetching user claims:", err);
+    res.status(500).json({ message: "Failed to fetch claims." });
   }
 });
 
-// GET Premium Claims
-app.get('/premiumclaims', verifyToken, async (req, res) => {
+// Middleware to verify if the user is an admin
+const verifyAdmin = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1]; // Extract token from header
+  if (!token) {
+    return res.status(401).json({ message: "Token missing" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ message: "You are not authorized as an admin" });
+    }
+
+    req.user = decoded; // Attach decoded user info to the request object
+    next(); // Proceed to the next middleware or route handler
+  });
+};
+
+// Admin route to get all claims
+app.get("/admin/claims", verifyAdmin, async (req, res) => {
   try {
-    const claims = await Claim.find({ userType: 'premium' });
+    const claims = await Claim.find({});
     res.status(200).json(claims);
   } catch (err) {
-    console.error('Error fetching premium claims:', err);
-    res.status(500).json({ message: 'Failed to fetch premium claims' });
+    console.error("Error fetching all claims:", err);
+    res.status(500).json({ message: "Failed to fetch claims." });
   }
 });
 
-// PUT for Updating Claim Status
-app.put('/claims/:id', async (req, res) => {
+
+// PUT Update Claim Status (Admin Only)
+app.put("/claims/:id", verifyAdmin, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  if (!status || !['Pending', 'Approved', 'Rejected'].includes(status)) {
-    return res.status(400).json({ message: 'Invalid status provided' });
+  if (!["Pending", "Approved", "Rejected"].includes(status)) {
+    return res.status(400).json({ message: "Invalid status provided." });
   }
 
   try {
     const claim = await Claim.findById(id);
     if (!claim) {
-      return res.status(404).json({ message: 'Claim not found' });
+      return res.status(404).json({ message: "Claim not found." });
     }
 
-    if (claim.status === 'Pending') {
+    if (claim.status === "Pending") {
       claim.status = status;
       await claim.save();
-      res.json({ message: `Claim ${status.toLowerCase()}d successfully!` });
+      res.json({ message: `Claim ${status.toLowerCase()} successfully!` });
     } else {
-      res.status(400).json({ message: 'Claim status cannot be changed once it is not Pending' });
+      res.status(400).json({ message: "Claim status cannot be changed from its current state." });
     }
   } catch (err) {
-    console.error('Error updating claim:', err);
-    res.status(500).json({ message: 'Failed to update claim' });
+    console.error("Error updating claim:", err);
+    res.status(500).json({ message: "Failed to update claim." });
   }
 });
 
-
-app.get('/claims', verifyToken, async (req, res) => {
-  try {
-    const claims = await Claim.find({ userType: 'regular' });
-    res.status(200).json(claims);
-  } catch (err) {
-    console.error('Error fetching claims:', err);
-    res.status(500).json({ message: 'Failed to fetch regular claims' });
-  }
-});
-
-app.get('/premiumclaims', verifyToken, async (req, res) => {
-  try {
-    const premiumClaims = await Claim.find({ userType: 'premium' });
-    res.status(200).json(premiumClaims);
-  } catch (err) {
-    console.error('Error fetching premium claims:', err);
-    res.status(500).json({ message: 'Failed to fetch premium claims' });
-  }
-});
-
-
-let options = {
-  hospitals: [],
-  services: [],
-  paymentMethods: [],
-};
-
-// Endpoint to fetch all options
-app.get("/options", (req, res) => {
-  res.json(options);
-});
-
-// Endpoint to add a new option
-app.post("/options", (req, res) => {
-  const { type, name } = req.body;
-
-  if (!type || !name || !options[type]) {
-    return res.status(400).json({ message: "Invalid option type or name." });
-  }
-
-  const newOption = { id: Date.now(), name };
-  options[type].push(newOption);
-
-  // Notify all connected clients
-  io.emit("optionsUpdated", { type, option: newOption });
-
-  res.json(newOption);
-});
-
-// Endpoint to delete an option
-app.delete("/options/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  let deleted = false;
-
-  for (const type in options) {
-    options[type] = options[type].filter((item) => {
-      if (item.id === id) {
-        deleted = true;
-        return false;
-      }
-      return true;
-    });
-  }
-
-  if (deleted) {
-    io.emit("optionsUpdated", null); // Notify clients to refetch
-    res.status(200).send();
-  } else {
-    res.status(404).json({ message: "Option not found." });
-  }
-});
 
 // Consolidated route to fetch all users (regular and premium)
 app.get('/users', async (req, res) => {
@@ -449,6 +382,43 @@ app.delete('/users/:id', verifyToken, async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting user" });
+  }
+});
+
+// DELETE route to remove an option (admin)
+app.delete("/options/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Option.findByIdAndDelete(id);
+    res.status(200).json({ message: "Option removed successfully." });
+  } catch (err) {
+    res.status(500).json({ message: "Error removing option." });
+  }
+});
+
+// POST to add options
+app.post("/options", async (req, res) => {
+  console.log("POST request to /options", req.body); // Log request body
+  try {
+    const newOption = new Options(req.body);
+    await newOption.save();
+    res.status(201).send(newOption);
+  } catch (error) {
+    console.error("Error in POST /options", error.message);
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// GET to retrieve options
+app.get("/options", async (req, res) => {
+  console.log("GET request to /options"); // Log when this is called
+  try {
+    const options = await Options.find();
+    console.log("Fetched options:", options); // Log fetched data
+    res.status(200).json(options);
+  } catch (error) {
+    console.error("Error in GET /options", error.message);
+    res.status(500).send({ error: error.message });
   }
 });
 

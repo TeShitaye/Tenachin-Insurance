@@ -15,6 +15,8 @@ const ClaimRequestForm = () => {
     paymentMethods: [],
   });
 
+  const [loading, setLoading] = useState(true);  // New loading state
+
   useEffect(() => {
     const fetchOptions = async () => {
       try {
@@ -22,6 +24,8 @@ const ClaimRequestForm = () => {
         setOptions(response.data);
       } catch (error) {
         console.error("Error fetching options:", error.response?.data || error.message);
+      } finally {
+        setLoading(false);  // Stop loading once the data is fetched
       }
     };
     fetchOptions();
@@ -60,7 +64,11 @@ const ClaimRequestForm = () => {
       alert("Failed to submit the claim request. Please try again.");
     }
   };
-  
+
+  if (loading) {
+    return <div>Loading options...</div>;  // Show loading message while fetching
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-16">
       <div className="w-full max-w-3xl bg-white rounded-lg shadow-xl p-8">
@@ -79,11 +87,15 @@ const ClaimRequestForm = () => {
               <option value="" disabled>
                 Select a hospital
               </option>
-              {options.hospitals.map((hospital) => (
-                <option key={hospital.id} value={hospital.name}>
-                  {hospital.name}
-                </option>
-              ))}
+              {options.hospitals && options.hospitals.length > 0 ? (
+                options.hospitals.map((hospital) => (
+                  <option key={hospital.id} value={hospital.name}>
+                    {hospital.name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No hospitals available</option>
+              )}
             </select>
           </div>
 
@@ -99,11 +111,15 @@ const ClaimRequestForm = () => {
               <option value="" disabled>
                 Select a service
               </option>
-              {options.services.map((service) => (
-                <option key={service.id} value={service.name}>
-                  {service.name}
-                </option>
-              ))}
+              {options.services && options.services.length > 0 ? (
+                options.services.map((service) => (
+                  <option key={service.id} value={service.name}>
+                    {service.name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No services available</option>
+              )}
             </select>
           </div>
 
@@ -119,11 +135,15 @@ const ClaimRequestForm = () => {
               <option value="" disabled>
                 Select a payment method
               </option>
-              {options.paymentMethods.map((method) => (
-                <option key={method.id} value={method.name}>
-                  {method.name}
-                </option>
-              ))}
+              {options.paymentMethods && options.paymentMethods.length > 0 ? (
+                options.paymentMethods.map((method) => (
+                  <option key={method.id} value={method.name}>
+                    {method.name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No payment methods available</option>
+              )}
             </select>
           </div>
 

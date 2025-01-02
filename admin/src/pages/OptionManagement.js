@@ -12,16 +12,22 @@ const OptionsManagement = () => {
     paymentMethods: [],
   });
   const [newOption, setNewOption] = useState({ type: "", name: "" });
-
+  const [loading, setLoading] = useState(true); // Loading state
   useEffect(() => {
     const fetchOptions = async () => {
       try {
         const response = await axios.get("http://localhost:5000/options");
-        setOptions(response.data);
+        console.log("Fetched options:", response.data); // Log the fetched data for debugging
+        if (response.data) {
+          setOptions(response.data);
+        }
       } catch (error) {
         console.error("Error fetching options:", error.response?.data || error.message);
+      } finally {
+        setLoading(false); // Stop loading after fetch
       }
     };
+    
 
     fetchOptions();
 
@@ -42,10 +48,20 @@ const OptionsManagement = () => {
     }
 
     try {
+      // Optimistically update the UI with the new option
+      const updatedOptions = { ...options };
+      updatedOptions[newOption.type].push({ name: newOption.name, id: Date.now() }); // Temporary ID
+
+      setOptions(updatedOptions);  // Immediately update the state
+
+      // Save the new option to the server
       await axios.post("http://localhost:5000/options", newOption);
-      setNewOption({ type: "", name: "" });
-      // Emit event to update options on all clients
+
+      // Emit event to notify clients
       socket.emit("optionsChanged");
+
+      // Clear the form
+      setNewOption({ type: "", name: "" });
     } catch (error) {
       console.error("Error adding option:", error.response?.data || error.message);
     }
@@ -54,12 +70,32 @@ const OptionsManagement = () => {
   const handleRemoveOption = async (type, id) => {
     try {
       await axios.delete(`http://localhost:5000/options/${id}`);
+      
+      // Optimistically remove the item from the state to update UI immediately
+      const updatedOptions = { ...options };
+      updatedOptions[type] = updatedOptions[type].filter((item) => item.id !== id);
+      
+      setOptions(updatedOptions);
+
       // Emit event to update options on all clients
       socket.emit("optionsChanged");
     } catch (error) {
       console.error("Error removing option:", error.response?.data || error.message);
     }
   };
+
+  // Show loading message while data is being fetched
+  if (loading) {
+    return <div>Loading options...</div>;
+  }
+
+  // Check if any of the options arrays are undefined or empty
+  const isOptionsEmpty = 
+    (!options.hospitals.length && !options.services.length && !options.paymentMethods.length);
+
+  if (isOptionsEmpty) {
+    return <div>No options available. Please try again later.</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 p-8 flex flex-col items-center">
@@ -107,20 +143,24 @@ const OptionsManagement = () => {
             <div key={type} className="bg-gray-50 rounded-lg shadow p-4">
               <h2 className="text-xl font-bold text-blue-700 capitalize mb-4">{type}</h2>
               <ul className="divide-y divide-gray-200">
-                {options[type].map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex justify-between items-center py-2 px-4 hover:bg-gray-100 rounded-md transition"
-                  >
-                    <span className="text-gray-800 font-medium">{item.name}</span>
-                    <button
-                      onClick={() => handleRemoveOption(type, item.id)}
-                      className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition"
+                {options[type] && options[type].length > 0 ? (
+                  options[type].map((item) => (
+                    <li
+                      key={item.id}
+                      className="flex justify-between items-center py-2 px-4 hover:bg-gray-100 rounded-md transition"
                     >
-                      Remove
-                    </button>
-                  </li>
-                ))}
+                      <span className="text-gray-800 font-medium">{item.name}</span>
+                      <button
+                        onClick={() => handleRemoveOption(type, item.id)}
+                        className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <li>No options available for {type}</li>
+                )}
               </ul>
             </div>
           ))}

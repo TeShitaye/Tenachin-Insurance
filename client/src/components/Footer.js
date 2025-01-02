@@ -19,14 +19,10 @@ const Footer = () => {
                 Profile
               </a>
             </li>
+          
             <li>
-              <a href="/policies" className="hover:text-yellow-500 transition no-underline">
-                Read Policy
-              </a>
-            </li>
-            <li>
-              <a href="/claims" className="hover:text-yellow-500 transition no-underline">
-                Claims
+              <a href="/services" className="hover:text-yellow-500 transition no-underline">
+                Our Services
               </a>
             </li>
             <li>
@@ -38,8 +34,8 @@ const Footer = () => {
         </div>
         <div>
           <h4 className="text-lg font-semibold text-white mb-2">Contact Us</h4>
-          <p className="text-sm mb-2">📞 +251-941208343</p>
-          <p className="text-sm mb-4">📧 support@tenachin.com</p>
+          <p className="text-sm mb-2">📞 0900000000</p>
+          <p className="text-sm mb-4">📧 support@magem.com</p>
           <div className="flex space-x-4">
             <a href="https://instagram.com" target="_blank" rel="noreferrer">
               <FaInstagram className="text-2xl hover:text-yellow-500 transition" />
