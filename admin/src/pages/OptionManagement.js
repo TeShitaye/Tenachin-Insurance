@@ -13,33 +13,44 @@ const OptionsManagement = () => {
   });
   const [newOption, setNewOption] = useState({ type: "", name: "" });
   const [loading, setLoading] = useState(true); // Loading state
+
   useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/options");
-        console.log("Fetched options:", response.data); // Log the fetched data for debugging
-        if (response.data) {
-          setOptions(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching options:", error.response?.data || error.message);
-      } finally {
-        setLoading(false); // Stop loading after fetch
+  const fetchOptions = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/options");
+      console.log("Fetched options:", response.data); // Debugging log
+      
+      if (response.data) {
+        // Transform the fetched array into an object with arrays for each type
+        const organizedOptions = response.data.reduce(
+          (acc, option) => {
+            if (!acc[option.type]) acc[option.type] = []; // Initialize if not present
+            acc[option.type].push({ id: option._id, name: option.name });
+            return acc;
+          },
+          { hospitals: [], services: [], paymentMethods: [] } // Default structure
+        );
+        
+        setOptions(organizedOptions);
       }
-    };
-    
+    } catch (error) {
+      console.error("Error fetching options:", error.response?.data || error.message);
+    } finally {
+      setLoading(false); // Stop loading after fetch
+    }
+  };
 
-    fetchOptions();
+  fetchOptions();
 
-    // Listen for real-time updates
-    socket.on("optionsUpdated", (updatedOptions) => {
-      if (updatedOptions) {
-        setOptions(updatedOptions);
-      }
-    });
+  // Listen for real-time updates
+  socket.on("optionsUpdated", (updatedOptions) => {
+    if (updatedOptions) {
+      setOptions(updatedOptions);
+    }
+  });
 
-    return () => socket.off("optionsUpdated");
-  }, []);
+  return () => socket.off("optionsUpdated");
+}, []);
 
   const handleAddOption = async () => {
     if (!newOption.type || !newOption.name) {

@@ -5,7 +5,9 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
+
 const SECRET_KEY = "your_secret_key"; // Replace with your secret key
+
 
 // Example middleware for verifying token
 const verifyToken = (req, res, next) => {
@@ -494,5 +496,5 @@ const Service = mongoose.model("Service", serviceSchema);
 
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+  console.log(`Server running on http://localhost:${PORT}`)
+}); 

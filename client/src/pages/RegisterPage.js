@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import backImage from "../assets/option4.jpg";
 
+
+
 function RegisterPage() {
     const [values, setValues] = useState({
         username: '',
@@ -14,7 +16,7 @@ function RegisterPage() {
 
     const [error, setError] = useState(''); // State for handling error messages
     const navigate = useNavigate();
-
+    
     function register(event) {
         event.preventDefault();
 
@@ -23,7 +25,7 @@ function RegisterPage() {
             setError("Passwords do not match.");
             return;
         }
-
+       
         console.log("Register data:", values);
         axios.post("http://localhost:5000/register", values)
             .then(res => {

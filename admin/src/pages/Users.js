@@ -8,7 +8,7 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
